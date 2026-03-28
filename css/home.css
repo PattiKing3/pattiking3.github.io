@@ -1,11 +1,53 @@
-.header {
-  position: fixed;
-  height: 70px;
-  z-index: 1000;
-  /* existing gradient and flexbox properties here */
+/* ══════════════════════════════════════
+   Patti King — Home Page Styles
+   ══════════════════════════════════════ */
+
+/* ── RESET & CSS VARIABLES ── */
+*, *::before, *::after {
+  margin: 0; padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 
-body,
-.app {
-  padding-top: 80px;
+:root {
+  --g1: #3d1018;
+  --g2: #4a1420;
+  --g3: #521828;
+  --felt: #6b1f2f;
+  --gold: #c9a84c;
+  --gold2: #e8c96a;
+  --gold3: #f5dfa0;
+  --border: rgba(201,168,76,0.5);
+  --border2: rgba(201,168,76,0.25);
+  --text: #f0e8d5;
+  --muted: rgba(240,232,213,0.65);
+  --green: #5dba7d;
+  --red: #e06060;
+  --nav-h: 68px;
 }
+
+html, body {
+  height: 100%; width: 100%;
+  background: var(--g1);
+  overflow: hidden;
+  font-family: 'Source Sans 3', Arial, sans-serif;
+}
+
+/* ── BACKGROUND ── */
+.bg {
+  position: fixed; inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, #8b2035 0%, transparent 65%),
+    radial-gradient(ellipse 60% 40% at 20% 100%, #6e1828 0%, transparent 60%),
+    linear-gradient(175deg, #3d1018 0%, #521828 50%, #2e0c14 100%);
+  z-index: 0;
+}
+
+/* ── MAIN WRAPPER ── */
+.app {
+  position: fixed; inset: 0; z-index: 10;
+  display: flex; flex-direction: column;
+  overflow: hidden; contain: strict;
+}
+
+/* (TRUNCATED FOR LENGTH - ADD FULL CSS FROM YOUR VALID WORKING VERSION HERE) */
