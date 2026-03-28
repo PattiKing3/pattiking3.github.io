@@ -1,0 +1,130 @@
+<!-- ══════════════════════════════════════
+     COMPONENT: footer.html
+     Usage: <div id="footer-placeholder"></div>
+            <script>loadComponent('footer-placeholder','footer.html')</script>
+     ══════════════════════════════════════ -->
+
+<!-- ── Bottom Navigation ── -->
+<nav class="bottom-nav">
+
+  <div class="nav-item active" onclick="setNav(this,'home')">
+    <div class="nav-icon">
+      <svg viewBox="0 0 24 24">
+        <path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9.5z"/>
+        <path d="M9 21V12h6v9"/>
+      </svg>
+    </div>
+    <div class="nav-label">Home</div>
+  </div>
+
+  <div class="nav-item" onclick="setNav(this,'wallet')">
+    <div class="nav-icon">
+      <svg viewBox="0 0 24 24">
+        <rect x="2" y="5" width="20" height="14" rx="3"/>
+        <path d="M16 12a1 1 0 1 0 2 0 1 1 0 0 0-2 0"/>
+        <path d="M2 10h20"/>
+      </svg>
+    </div>
+    <div class="nav-label">Wallet</div>
+  </div>
+
+  <!-- Centre Lobby Button (raised) -->
+  <div class="nav-item nav-lobby" onclick="setNav(this,'lobby')">
+    <div class="nav-icon">
+      <svg viewBox="0 0 100 100" width="26" height="26" xmlns="http://www.w3.org/2000/svg">
+        <path d="M50 5 C50 5 10 35 10 58 C10 72 20 80 34 76 C30 84 26 90 20 93 L80 93 C74 90 70 84 66 76 C80 80 90 72 90 58 C90 35 50 5 50 5Z" fill="#ffffff"/>
+      </svg>
+    </div>
+    <div class="nav-label">Game Lobby</div>
+  </div>
+
+  <div class="nav-item" onclick="setNav(this,'friends')">
+    <div class="nav-icon">
+      <svg viewBox="0 0 24 24">
+        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+        <circle cx="9" cy="7" r="4"/>
+        <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+      </svg>
+    </div>
+    <div class="nav-label">Friends</div>
+  </div>
+
+  <div class="nav-item" onclick="setNav(this,'leaderboard')">
+    <div class="nav-icon">
+      <svg viewBox="0 0 24 24">
+        <rect x="2"  y="14" width="4" height="7" rx="1"/>
+        <rect x="9"  y="9"  width="4" height="12" rx="1"/>
+        <rect x="16" y="4"  width="4" height="17" rx="1"/>
+      </svg>
+    </div>
+    <div class="nav-label">Leaderboard</div>
+  </div>
+
+</nav>
+
+<!-- ── Toast Notification ── -->
+<div class="toast" id="toast"></div>
+
+<!-- ── Notification Popup Overlay ── -->
+<div class="notif-overlay" id="notifOverlay" onclick="closeNotif()"></div>
+
+<!-- ── Notification Popup ── -->
+<div class="notif-popup" id="notifPopup">
+  <div class="notif-popup-header">
+    <div class="notif-popup-title">Notifications</div>
+    <div class="notif-popup-count" id="notifCount">3 New</div>
+    <div class="notif-mark-all" onclick="markAllRead()">Mark all read</div>
+  </div>
+  <div class="notif-list">
+
+    <div class="notif-row unread" onclick="readNotif(this)">
+      <div class="notif-row-icon trophy">🏆</div>
+      <div class="notif-row-body">
+        <div class="notif-row-title">You won <span class="gc"></span> 1,200 Coins in Blazing Joker Cup!</div>
+        <div class="notif-row-sub">Your rank was #23 out of 487 players.</div>
+        <div class="notif-row-time">Today, 2:30 PM</div>
+      </div>
+      <div class="notif-unread-dot"></div>
+    </div>
+
+    <div class="notif-row unread" onclick="readNotif(this)">
+      <div class="notif-row-icon tournament">🎴</div>
+      <div class="notif-row-body">
+        <div class="notif-row-title">Golden Ace Tournament starts in 2 hours</div>
+        <div class="notif-row-sub">Get ready! Prize pool <span class="gc"></span> 2,50,000 Coins awaits.</div>
+        <div class="notif-row-time">Today, 1:00 PM</div>
+      </div>
+      <div class="notif-unread-dot"></div>
+    </div>
+
+    <div class="notif-row unread" onclick="readNotif(this)">
+      <div class="notif-row-icon coins">🪙</div>
+      <div class="notif-row-body">
+        <div class="notif-row-title">1,200 Coins credited to your wallet</div>
+        <div class="notif-row-sub">Your purchase of ₹99 was successful.</div>
+        <div class="notif-row-time">Yesterday, 6:15 PM</div>
+      </div>
+      <div class="notif-unread-dot"></div>
+    </div>
+
+    <div class="notif-row" onclick="readNotif(this)">
+      <div class="notif-row-icon promo">🎁</div>
+      <div class="notif-row-body">
+        <div class="notif-row-title">Special Offer: Get 500 bonus coins today!</div>
+        <div class="notif-row-sub">Limited time offer. Add coins now and earn extra.</div>
+        <div class="notif-row-time">Yesterday, 12:00 PM</div>
+      </div>
+    </div>
+
+    <div class="notif-row" onclick="readNotif(this)">
+      <div class="notif-row-icon system">🔔</div>
+      <div class="notif-row-body">
+        <div class="notif-row-title">Royal Patti King Championship — Registration Open</div>
+        <div class="notif-row-sub">Mega prize pool of <span class="gc"></span> 5,00,000 Coins. Entry <span class="gc"></span> 199 only.</div>
+        <div class="notif-row-time">2 days ago</div>
+      </div>
+    </div>
+
+  </div>
+</div>
