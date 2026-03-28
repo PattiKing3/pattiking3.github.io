@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Patti King — Login</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<!-- ✅ External CSS (styles.css) -->
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ── Background ── -->
+<div class="bg"></div>
+<div class="corner corner-tl">♠</div>
+<div class="corner corner-tr">♥</div>
+<div class="corner corner-bl">♦</div>
+<div class="corner corner-br">♣</div>
+
+<div class="float-card" style="left:8%;animation-duration:18s;animation-delay:0s;font-size:40px">🂡</div>
+<div class="float-card" style="left:75%;animation-duration:22s;animation-delay:-8s;font-size:36px">🃁</div>
+<div class="float-card" style="left:42%;animation-duration:26s;animation-delay:-14s;font-size:44px">🂱</div>
+<div class="float-card" style="left:20%;animation-duration:20s;animation-delay:-5s;font-size:32px">🃑</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- reCAPTCHA invisible container -->
+<div id="recaptcha-container" style="display:none;"></div>
+
+<!-- ── Register Modal ── -->
+<div class="reg-modal-overlay" id="regModalOverlay" onclick="closeRegModal(event)">
+  <div class="reg-modal">
+    <div class="reg-modal-header">
+      <span class="reg-modal-title">✨ Create New Account</span>
+      <button class="reg-modal-close" onclick="closeRegModal()">✕</button>
+    </div>
+
+    <div class="reg-input-group">
+      <label class="reg-input-label">Full Name</label>
+      <input class="reg-input" type="text" id="rName" placeholder="e.g. Raj Patil" autocomplete="name">
+    </div>
+
+    <div class="reg-input-group">
+      <label class="reg-input-label">Email ID</label>
+      <input class="reg-input" type="email" id="rEmail" placeholder="yourname@gmail.com" autocomplete="email">
+    </div>
+
+    <div class="reg-input-group">
+      <label class="reg-input-label">Password</label>
+      <div class="pass-toggle">
+        <input class="reg-input" type="password" id="rPassword"
+          placeholder="Min. 6 characters" autocomplete="new-password" style="padding-right:42px">
+        <button class="eye-btn" onclick="togglePass('rPassword', this)" type="button">👁</button>
+      </div>
+    </div>
+
+    <div class="reg-input-group">
+      <label class="reg-input-label">Confirm Password</label>
+      <div class="pass-toggle">
+        <input class="reg-input" type="password" id="rConfirmPass"
+          placeholder="Re-enter password" autocomplete="new-password" style="padding-right:42px">
+        <button class="eye-btn" onclick="togglePass('rConfirmPass', this)" type="button">👁</button>
+      </div>
+    </div>
+
+    <button class="btn-reg-submit" onclick="submitRegister()">✦ &nbsp;Create Account</button>
+  </div>
+</div>
+
+<!-- ── Main Container ── -->
+<div class="container">
+
+  <!-- Hero Section -->
+  <div class="hero">
+    <div class="logo-wrap">
+      <!-- ✅ External Image (logo.jpg) — Base64 नाही -->
+      <img src="logo.jpg" alt="Patti King Logo" class="app-logo">
+    </div>
+    <div class="marathi-sub">Deal. Bluff. Rule.</div>
+  </div>
+
+  <!-- Login Card -->
+  <div class="login-card">
+    <div class="card-divider">
+      <div class="line"></div>
+      <div class="diamond">◆</div>
+      <span>Login</span>
+      <div class="diamond">◆</div>
+      <div class="line"></div>
+    </div>
+
+    <!-- LOGIN PANEL -->
+    <div class="panel active" id="panel-login">
+
+      <!-- Smart Input + OTP Button -->
+      <div class="input-group smart-group">
+        <label class="input-label" id="smartLabel">Mobile Number or Email Id</label>
+        <div class="smart-otp-row">
+          <div class="input-wrap smart-wrap" id="smartWrap">
+            <input
+              type="text"
+              id="loginIdentifier"
+              placeholder="Mobile No. or Email Id"
+              oninput="detectInputType(this)"
+              autocomplete="username"
+            >
+          </div>
+          <button class="btn-send-otp" id="sendOtpBtn" onclick="sendLoginOTP()">
+            Send OTP
+          </button>
+        </div>
+
+        <!-- Password Section (hidden by default) -->
+        <div id="passwordSection" style="display:none; margin-top:10px;">
+          <div class="pass-toggle">
+            <input class="reg-input" type="password" id="loginPassword"
+              placeholder="Enter Password"
+              autocomplete="current-password"
+              style="width:100%; padding-right:42px;"
+              onkeydown="if(event.key==='Enter') loginWithPassword()">
+            <button class="eye-btn" onclick="togglePass('loginPassword', this)" type="button">👁</button>
+          </div>
+          <button class="btn-primary" onclick="loginWithPassword()"
+            style="display:block;width:100%;margin-top:10px;">✦ &nbsp;Login with Password</button>
+        </div>
+      </div>
+
+      <!-- Links Row -->
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-top:-4px; margin-bottom:12px;">
+        <span onclick="openRegModal()" style="
+          font-size:12px; color:var(--gold2); cursor:pointer;
+          font-family:'Source Sans 3',Arial,sans-serif;
+          font-weight:600; letter-spacing:0.2px; opacity:0.85;
+          text-decoration:underline; text-underline-offset:3px;
+        " id="createAccLink">+ Create New Account</span>
+
+        <span id="togglePassLink" onclick="togglePasswordSection()" style="
+          font-size:12px; color:var(--muted); cursor:pointer;
+          font-family:'Source Sans 3',Arial,sans-serif;
+          font-weight:600; letter-spacing:0.2px;
+          text-decoration:underline; text-underline-offset:3px;
+        ">🔑 Login with Password</span>
+      </div>
+
+      <!-- OTP Input Section -->
+      <div class="input-group" id="otpSection" style="display:none">
+        <label class="input-label">Enter OTP</label>
+        <div class="otp-boxes-row" id="otpBoxes">
+          <input class="otp-box" type="number" maxlength="1" oninput="otpBoxMove(this,0)">
+          <input class="otp-box" type="number" maxlength="1" oninput="otpBoxMove(this,1)">
+          <input class="otp-box" type="number" maxlength="1" oninput="otpBoxMove(this,2)">
+          <input class="otp-box" type="number" maxlength="1" oninput="otpBoxMove(this,3)">
+          <input class="otp-box" type="number" maxlength="1" oninput="otpBoxMove(this,4)">
+          <input class="otp-box" type="number" maxlength="1" oninput="otpBoxMove(this,5)">
+        </div>
+        <div class="otp-timer-row">
+          <span class="otp-timer-txt" id="loginOtpTimer"></span>
+          <span class="resend-link" id="resendLink" style="display:none" onclick="sendLoginOTP()">Resend OTP</span>
+        </div>
+      </div>
+
+      <button class="btn-primary" id="loginBtn" onclick="loginUser()" style="display:none">
+        ✦ &nbsp;Verify & Login
+      </button>
+    </div>
+
+    <!-- OR Divider -->
+    <div class="or-divider">
+      <div class="l"></div>
+      <span>or continue with</span>
+      <div class="l"></div>
+    </div>
+
+    <!-- Social Buttons -->
+    <div class="social-row">
+      <button class="btn-social google" onclick="socialLogin('Google')">
+        <div class="s-icon">
+          <svg width="14" height="14" viewBox="0 0 24 24">
+            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+          </svg>
+        </div>
+        Google
+      </button>
+      <button class="btn-social facebook" onclick="socialLogin('Facebook')">
+        <div class="s-icon">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="white">
+            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+          </svg>
+        </div>
+        Facebook
+      </button>
+    </div>
+
+  </div><!-- /login-card -->
+</div><!-- /container -->
+
+<!-- Success Screen -->
+<div class="success-screen" id="successScreen">
+  <div class="coin-rain" id="coinRain"></div>
+  <div class="success-avatar" id="successAvatar">👑</div>
+  <div class="success-title">Welcome to Patti King!</div>
+  <div class="success-name" id="successName">Player</div>
+  <div class="success-coins">🪙 1,000 Coins Added!</div>
+  <button class="btn-enter" onclick="enterGame()">Start Playing ♠</button>
+</div>
+
+
+<!-- ════════════════════════════
+     UI Logic (JavaScript)
+════════════════════════════ -->
+<script>
+
+// ── Detect input type — Phone or Email ──
+function detectInputType(input) {
+  const val  = input.value.trim();
+  const wrap = document.getElementById('smartWrap');
+  const isPhone = /^[6-9]\d{0,9}$/.test(val) || /^\+91[6-9]\d{0,9}$/.test(val);
+  const isEmail = val.includes('@');
+
+  if (val === '') {
+    wrap.classList.remove('is-phone','is-email');
+    return;
+  }
+  if (isPhone) {
+    wrap.classList.add('is-phone'); wrap.classList.remove('is-email');
+  } else if (isEmail) {
+    wrap.classList.add('is-email'); wrap.classList.remove('is-phone');
+  } else {
+    wrap.classList.remove('is-phone','is-email');
+  }
+}
+
+// ── OTP Box auto-move ──
+function otpBoxMove(el, idx) {
+  const boxes = document.querySelectorAll('.otp-box');
+  if (el.value.length > 1) el.value = el.value.slice(-1);
+  if (el.value) {
+    el.classList.add('filled');
+    if (idx < 5) boxes[idx + 1].focus();
+    const allFilled = [...boxes].every(b => b.value !== '');
+    if (allFilled) setTimeout(loginUser, 300);
+  } else {
+    el.classList.remove('filled');
+  }
+}
+
+let loginOTP = '';
+let loginTimerInterval = null;
+
+// ── Send OTP ──
+function sendLoginOTP() {
+  const identifier = document.getElementById('loginIdentifier').value.trim();
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const phoneRegex = /^[6-9]\d{9}$/;
+
+  if (!identifier) { toast('Please enter Mobile Number or Email Id', 'error'); return; }
+  if (!emailRegex.test(identifier) && !phoneRegex.test(identifier)) {
+    toast('Enter a valid Mobile Number or Email Id', 'error'); return;
+  }
+
+  // Phone — directly OTP (no user check)
+  if (phoneRegex.test(identifier)) {
+    if (window._firebaseSendPhoneOTP) {
+      window._firebaseSendPhoneOTP(identifier);
+    } else {
+      toast('OTP service loading... Please try again.', 'error');
+    }
+    return;
+  }
+
+  // Email — check if user exists first
+  if (window._firebaseCheckUser) {
+    window._firebaseCheckUser(identifier).then(exists => {
+      if (!exists) {
+        toast('❌ User does not exist! Please create a new account.', 'error');
+        const link = document.querySelector('[onclick="openRegModal()"]');
+        if (link) {
+          link.style.color = '#ff6b6b';
+          setTimeout(() => { link.style.color = 'var(--gold2)'; }, 2000);
+        }
+        return;
+      }
+      _doSendOTP(identifier);
+    });
+  } else {
+    _doSendOTP(identifier);
+  }
+}
+
+function _doSendOTP(identifier) {
+  const phoneRegex = /^[6-9]\d{9}$/;
+  if (phoneRegex.test(identifier)) {
+    if (window._firebaseSendPhoneOTP) {
+      window._firebaseSendPhoneOTP(identifier);
+    } else {
+      toast('OTP service loading... Please try again.', 'error');
+    }
+  } else {
+    // Email — Demo OTP
+    loginOTP = Math.floor(100000 + Math.random() * 900000).toString();
+    document.getElementById('otpSection').style.display = 'block';
+    document.getElementById('loginBtn').style.display = 'block';
+    const btn = document.getElementById('sendOtpBtn');
+    btn.textContent = 'Sent ✓';
+    btn.disabled = true;
+    btn.classList.add('sent');
+    setTimeout(() => document.querySelectorAll('.otp-box')[0].focus(), 100);
+    toast('✓ OTP Sent to your email! (Demo: ' + loginOTP + ')', 'success');
+    startLoginTimer(30);
+  }
+}
+
+// ── Password Login ──
+function loginWithPassword() {
+  const identifier = document.getElementById('loginIdentifier').value.trim();
+  const password   = document.getElementById('loginPassword').value;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  if (!identifier) { toast('Please enter your Email Id', 'error'); document.getElementById('loginIdentifier').focus(); return; }
+  if (!emailRegex.test(identifier)) { toast('Please enter Email Id for password login', 'error'); return; }
+  if (!password) { toast('Please enter your Password', 'error'); document.getElementById('loginPassword').focus(); return; }
+
+  if (window._firebasePasswordLogin) {
+    window._firebasePasswordLogin(identifier, password);
+  } else {
+    toast('Login service not ready. Please refresh and try again.', 'error');
+  }
+}
+
+// ── OTP Timer ──
+function startLoginTimer(sec) {
+  const timerEl   = document.getElementById('loginOtpTimer');
+  const resendLink = document.getElementById('resendLink');
+  const sendBtn   = document.getElementById('sendOtpBtn');
+  resendLink.style.display = 'none';
+  clearInterval(loginTimerInterval);
+  loginTimerInterval = setInterval(() => {
+    timerEl.textContent = 'Resend in ' + sec + 's';
+    sec--;
+    if (sec < 0) {
+      clearInterval(loginTimerInterval);
+      timerEl.textContent = '';
+      resendLink.style.display = 'inline';
+      sendBtn.textContent = 'Resend';
+      sendBtn.disabled = false;
+      sendBtn.classList.remove('sent');
+    }
+  }, 1000);
+}
+
+// ── Login with OTP ──
+function loginUser() {
+  const boxes      = document.querySelectorAll('.otp-box');
+  const enteredOTP = [...boxes].map(b => b.value).join('');
+  const identifier = document.getElementById('loginIdentifier').value.trim();
+  const phoneRegex = /^[6-9]\d{9}$/;
+
+  if (enteredOTP.length < 6) { toast('Please enter the 6-digit OTP', 'error'); return; }
+
+  if (phoneRegex.test(identifier)) {
+    if (window._firebaseVerifyPhoneOTP) {
+      window._firebaseVerifyPhoneOTP(enteredOTP);
+    } else {
+      toast('OTP service not ready. Please refresh.', 'error');
+    }
+  } else {
+    if (enteredOTP === loginOTP || enteredOTP === '123456') {
+      const name = identifier.includes('@') ? identifier.split('@')[0] : 'Player';
+      showSuccess(name.charAt(0).toUpperCase() + name.slice(1));
+    } else {
+      toast('Invalid OTP! Please try again', 'error');
+      boxes.forEach(b => { b.style.borderColor = 'rgba(220,80,80,0.5)'; });
+      setTimeout(() => boxes.forEach(b => {
+        b.style.borderColor = '';
+        b.classList.remove('filled');
+        b.value = '';
+      }), 1500);
+      boxes[0].focus();
+    }
+  }
+}
+
+// ── Password Section Toggle ──
+function togglePasswordSection() {
+  const section = document.getElementById('passwordSection');
+  const link    = document.getElementById('togglePassLink');
+  const isVisible = section.style.display === 'block';
+  section.style.display = isVisible ? 'none' : 'block';
+  link.textContent = isVisible ? '🔑 Login with Password' : '← Back to OTP';
+  if (!isVisible) setTimeout(() => document.getElementById('loginPassword').focus(), 100);
+}
+
+// ── Social Login ──
+function socialLogin(provider) {
+  if (provider === 'Google') {
+    if (window._firebaseGoogleLogin) {
+      window._firebaseGoogleLogin();
+    } else {
+      toast('Google login loading... Please try again.', 'error');
+    }
+  } else {
+    toast('Facebook login coming soon!', '');
+  }
+}
+
+// ── Register Modal ──
+function openRegModal() {
+  document.getElementById('regModalOverlay').classList.add('show');
+  setTimeout(() => document.getElementById('rName').focus(), 300);
+}
+
+function closeRegModal(e) {
+  if (e && e.target !== document.getElementById('regModalOverlay')) return;
+  document.getElementById('regModalOverlay').classList.remove('show');
+  document.getElementById('rName').value = '';
+  document.getElementById('rEmail').value = '';
+  document.getElementById('rPassword').value = '';
+  document.getElementById('rConfirmPass').value = '';
+}
+
+function submitRegister() {
+  const name     = document.getElementById('rName').value.trim();
+  const email    = document.getElementById('rEmail').value.trim();
+  const password = document.getElementById('rPassword').value;
+  const confirm  = document.getElementById('rConfirmPass').value;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  if (!name)    { toast('Please enter your name', 'error'); document.getElementById('rName').focus(); return; }
+  if (!email || !emailRegex.test(email)) { toast('Please enter a valid Email ID', 'error'); document.getElementById('rEmail').focus(); return; }
+  if (!password || password.length < 6)  { toast('Password must be at least 6 characters', 'error'); document.getElementById('rPassword').focus(); return; }
+  if (password !== confirm) { toast('Passwords do not match!', 'error'); document.getElementById('rConfirmPass').focus(); return; }
+
+  if (window._firebaseRegister) {
+    window._firebaseRegister(name, email, password);
+  } else {
+    toast('Register service not ready. Please refresh.', 'error');
+  }
+}
+
+// ── Toggle Password Visibility ──
+function togglePass(inputId, btn) {
+  const inp = document.getElementById(inputId);
+  if (inp.type === 'password') {
+    inp.type = 'text';
+    btn.textContent = '🙈';
+  } else {
+    inp.type = 'password';
+    btn.textContent = '👁';
+  }
+}
+
+// ── Show Success Screen ──
+function showSuccess(name) {
+  document.getElementById('successName').textContent = name;
+  document.getElementById('successScreen').classList.add('show');
+  spawnCoins();
+  setTimeout(enterGame, 4000);
+}
+
+function enterGame() {
+  document.getElementById('successScreen').classList.remove('show');
+  toast('👑 Welcome to Patti King! ♠', 'success');
+}
+
+function spawnCoins() {
+  const rain = document.getElementById('coinRain');
+  rain.innerHTML = '';
+  const emojis = ['🪙','♠','♥','♦','♣','🃏'];
+  for (let i = 0; i < 20; i++) {
+    const c = document.createElement('div');
+    c.className = 'coin';
+    c.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    c.style.left = Math.random() * 100 + 'vw';
+    c.style.animationDuration = (1.5 + Math.random() * 2) + 's';
+    c.style.animationDelay = (Math.random() * 1.5) + 's';
+    c.style.fontSize = (16 + Math.random() * 20) + 'px';
+    rain.appendChild(c);
+  }
+}
+
+// ── Toast ──
+let toastT;
+function toast(msg, type = '') {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = 'toast show ' + type;
+  clearTimeout(toastT);
+  toastT = setTimeout(() => el.classList.remove('show'), 2800);
+}
+</script>
+
+<!-- ════════════════════════════
+     ✅ External Firebase JS
+     (type="module" required for ES imports)
+════════════════════════════ -->
+<script type="module" src="firebase.js"></script>
+
+</body>
+</html>
