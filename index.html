@@ -465,9 +465,18 @@ function showSuccess(name) {
 }
 
 function enterGame() {
+  // 1. Hide the success screen overlay
   document.getElementById('successScreen').classList.remove('show');
+  
+  // 2. Show a welcome message (Toast)
   toast('👑 Welcome to Patti King! ♠', 'success');
-}
+
+  // 3. Redirect to the home folder's index or home file
+  // Using a small delay so the user can see the welcome toast
+  setTimeout(() => {
+    window.location.href = "home/home.html"; 
+  }, 1000); 
+  }
 
 function spawnCoins() {
   const rain = document.getElementById('coinRain');
