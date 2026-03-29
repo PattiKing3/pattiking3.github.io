@@ -58,7 +58,11 @@ function menuNav(label) {
   };
   if (pageMap[label]) { window.location.href = pageMap[label]; return; }
   if (label === 'Logout') { 
-    if(window.logoutUser) window.logoutUser();
+    if (typeof window.logoutUser === 'function') {
+      window.logoutUser();
+    } else {
+      toast('Logout service is not ready...', 'error');
+    }
     return; 
   }
   toast('Opening ' + label + '...', '');

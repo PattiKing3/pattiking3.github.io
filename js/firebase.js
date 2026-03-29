@@ -100,10 +100,13 @@ window._firebaseSendPhoneOTP = async function(phone) {
 
 // ── Logout Function ──
 window.logoutUser = () => {
+  if (typeof toast === 'function') toast('Logging out...', '');
   signOut(auth).then(() => {
-    window.location.href = "../index.html"; 
+    // Redirect to login or landing page
+    window.location.href = "index.html"; 
   }).catch((error) => {
     console.error("Logout error:", error);
+    if (typeof toast === 'function') toast('Logout failed!', 'error');
   });
 };
 

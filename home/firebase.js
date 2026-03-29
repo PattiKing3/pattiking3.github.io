@@ -3,7 +3,7 @@
 // ══════════════════════════════════════
 
 import { initializeApp }            from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
 import { getFirestore, doc, getDoc }   from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 
 // ════════════════════════════════════════
@@ -60,3 +60,12 @@ onAuthStateChanged(auth, async (user) => {
     console.error("Firestore error:", e);
   }
 });
+
+// ── Logout Function ──
+window.logoutUser = () => {
+  signOut(auth).then(() => {
+    window.location.href = "../index.html"; // Redirect to login page
+  }).catch((error) => {
+    console.error("Logout error:", error);
+  });
+};
