@@ -68,6 +68,17 @@ function menuNav(label) {
   toast('Opening ' + label + '...', '');
 }
 
+// ══ LOGOUT LOGIC ══
+function logoutUser() {
+  if (typeof window.logoutUser === 'function') {
+    window.logoutUser();
+  } else {
+    // Fallback if Firebase service is not yet initialized or for demo purposes
+    toast('Logging out...', '');
+    setTimeout(() => { window.location.href = '../index.html'; }, 800);
+  }
+}
+
 // ══ CATEGORY TAB → Game Lobby ══
 function openGLMode(mode) {
   window.location.href = 'game_lobby.html?mode=' + mode;
