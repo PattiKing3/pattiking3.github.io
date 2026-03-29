@@ -7,7 +7,7 @@ import {
   getAuth, GoogleAuthProvider,
   signInWithPopup, signInWithRedirect, getRedirectResult,
   createUserWithEmailAndPassword, updateProfile,
-  signInWithEmailAndPassword, fetchSignInMethodsForEmail,
+  signInWithEmailAndPassword, fetchSignInMethodsForEmail, signOut,
   signInWithPhoneNumber, RecaptchaVerifier
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import {
@@ -96,6 +96,15 @@ window._firebaseSendPhoneOTP = async function(phone) {
       toast('OTP send failed: ' + err.code, 'error');
     }
   }
+};
+
+// ── Logout Function ──
+window.logoutUser = () => {
+  signOut(auth).then(() => {
+    window.location.href = "../index.html"; 
+  }).catch((error) => {
+    console.error("Logout error:", error);
+  });
 };
 
 // ── Phone OTP Verify ──

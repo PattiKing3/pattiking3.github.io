@@ -537,7 +537,9 @@ html, body {
 .menu-item span { flex: 1; font-size: 13px; font-weight: 600; letter-spacing: 0.2px; }
 .menu-arrow { color: var(--muted); font-size: 18px; opacity: 0.5; }
 .menu-logout { margin-top: auto; padding: 16px 20px; color: #e06060; }
-.menu-logout .menu-item-icon { color: #e06060; }
+.menu-logout .menu-item-icon { color: #e06060; filter: drop-shadow(0 0 5px rgba(224,96,96,0.3)); }
+.menu-logout span { font-weight: 700; }
+.menu-logout:hover { background: rgba(224, 96, 96, 0.08) !important; }
 
 /* ══════════════════════════════════════
    NOTIFICATION POPUP

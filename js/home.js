@@ -57,7 +57,10 @@ function menuNav(label) {
     'About':               'about.html',
   };
   if (pageMap[label]) { window.location.href = pageMap[label]; return; }
-  if (label === 'Logout') { toast('Logging out...', ''); return; }
+  if (label === 'Logout') { 
+    if(window.logoutUser) window.logoutUser();
+    return; 
+  }
   toast('Opening ' + label + '...', '');
 }
 
