@@ -24,11 +24,15 @@ const auth = getAuth(app);
 const db   = getFirestore(app);
 
 // ── Auth State Changed ──
-// User login नसेल तर login page वर redirect करा
-// Login असेल तर Firestore मधून user data load करा
+// १. बॅक बटण ब्लॉक करणे (सर्वात आधी)
+history.pushState(null, null, location.href);
+window.onpopstate = function () {
+    history.go(1);
+};
+// २. त्यानंतर तुमचे Auth State Logic
 onAuthStateChanged(auth, async (user) => {
   if (!user) {
-    window.location.href = "login.html";
+    window.location.replace("../index.html");
     return;
   }
   try {
