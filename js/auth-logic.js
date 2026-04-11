@@ -103,7 +103,7 @@ window.logoutUser = () => {
   if (typeof toast === 'function') toast('Logging out...', '');
   signOut(auth).then(() => {
     // Redirect to login or landing page
-    window.location.replace("../index.html"); 
+    window.location.href("home/home.html"); 
   }).catch((error) => {
     console.error("Logout error:", error);
     if (typeof toast === 'function') toast('Logout failed!', 'error');
@@ -122,7 +122,7 @@ window._firebaseVerifyPhoneOTP = async function(otp) {
     const name   = user.displayName || 'Player';
     await saveUser(user);
     toast('✓ Mobile Login Successful!', 'success');
-    setTimeout(() => showSuccess(name), 600);
+    setTimeout(() => showSuccess(name), 200);
 
   } catch (err) {
     console.error("OTP verify error:", err.code);
@@ -163,7 +163,7 @@ window._firebaseGoogleLogin = async function() {
       const name   = user.displayName || "Player";
       await saveUser(user);
       toast('✓ ' + name + ' — Google Login Successful!', 'success');
-      setTimeout(() => showSuccess(name), 600);
+      setTimeout(() => showSuccess(name), 200);
     }
   } catch (err) {
     console.error("Google login error:", err.code);
@@ -187,7 +187,7 @@ try {
     
     toast('✓ ' + name + ' — Google Login Successful!', 'success');
     
-    setTimeout(() => showSuccess(name), 600);
+    setTimeout(() => showSuccess(name), 200);
   }
 } catch (err) {
   if (err.code !== 'auth/no-auth-event') {
@@ -204,7 +204,7 @@ window._firebaseRegister = async function(name, email, password) {
     await saveUser({ ...cred.user, displayName: name });
     closeRegModal();
     toast('✓ Account created! Welcome, ' + name + '!', 'success');
-    setTimeout(() => showSuccess(name), 600);
+    setTimeout(() => showSuccess(name), 200);
   } catch (err) {
     if (err.code === 'auth/email-already-in-use') {
       toast('This Email is already registered!', 'error');
@@ -238,7 +238,7 @@ window._firebasePasswordLogin = async function(email, password) {
     const name = user.displayName || email.split('@')[0];
     await saveUser(user);
     toast('✓ ' + name + ' — Login Successful!', 'success');
-    setTimeout(() => showSuccess(name), 600);
+    setTimeout(() => showSuccess(name), 200);
   } catch (err) {
     if (err.code === 'auth/user-not-found' || err.code === 'auth/invalid-credential') {
       toast('❌ User does not exist! Please create a new account.', 'error');
