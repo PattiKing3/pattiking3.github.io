@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Patti King — Wallet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+
+<!-- Shared base styles -->
+<link rel="stylesheet" href="../assets/css/style.css">
+<!-- Wallet-specific styles -->
+<link rel="stylesheet" href="../assets/css/wallet.css">
+</head>
+<body>
+
+<div class="bg"></div>
+
+<!-- ════════════════════════════════════════
+     WALLET OVERLAY
+     (position:fixed — slides over lobby)
+     ════════════════════════════════════════ -->
+<div class="coins-overlay show" id="coinsOverlay">
+  <div class="coins-page">
+
+    <!-- ── HEADER ── -->
+    <div class="coins-header">
+      <div class="coins-back" onclick="history.back()" title="Back">&#8592;</div>
+      <div class="coins-title">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+             stroke="var(--gold2)" stroke-width="1.8" stroke-linecap="round"
+             stroke-linejoin="round" style="vertical-align:-3px;margin-right:6px;">
+          <rect x="2" y="5" width="20" height="14" rx="3"/>
+          <path d="M16 12a1 1 0 1 0 2 0 1 1 0 0 0-2 0"/>
+          <path d="M2 10h20"/>
+        </svg>Wallet
+      </div>
+    </div>
+
+    <!-- ── SCROLL BODY ── -->
+    <div class="coins-scroll">
+
+      <!-- Balance Card -->
+      <div class="coins-balance-card">
+        <div class="coins-bal-label">Balance (₹)</div>
+        <div class="coins-bal-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+               stroke="#8a6010" stroke-width="1.8">
+            <circle cx="12" cy="12" r="9"/>
+            <circle cx="12" cy="12" r="5"/>
+            <path d="M12 3v2M12 19v2M3 12h2M19 12h2"/>
+          </svg>
+        </div>
+        <div class="coins-bal-amount">
+          <span id="coinsBalDisplay">2,450</span>
+        </div>
+        <div class="coins-bal-sub">&#9670; Gold Member</div>
+      </div>
+
+      <!-- ── WALLET TABS (Winnings / Bonus) ── -->
+      <div class="wallet-tabs-row">
+
+        <div class="wallet-tab" id="tabWinning" onclick="switchWalletTab('winning')">
+          <div class="wallet-tab-icon">&#9312;</div>
+          <div class="wallet-tab-label">Winnings (₹)</div>
+          <div class="wallet-tab-value green" id="winningVal">₹3,840</div>
+        </div>
+
+        <div class="wallet-tab" id="tabBonus" onclick="switchWalletTab('bonus')">
+          <button class="tab-info-btn"
+                  onclick="event.stopPropagation(); showBonusInfo()"
+                  title="Bonus Info">i</button>
+          <div class="wallet-tab-icon">&#127873;</div>
+          <div class="wallet-tab-label">Bonus Reward</div>
+          <div class="wallet-tab-value gold" id="bonusVal">
+            ₹<span id="bonusDisplay">500</span>
+          </div>
+        </div>
+
+      </div><!-- /.wallet-tabs-row -->
+
+      <!-- ── WITHDRAW PANEL (Winnings tab) ── -->
+      <div class="withdraw-panel" id="withdrawPanel">
+        <div class="withdraw-row">
+          <div class="withdraw-info">
+            <div class="withdraw-info-label">Winnings (₹)</div>
+            <div class="withdraw-info-val" id="withdrawAvail">₹3,840</div>
+          </div>
+          <div class="withdraw-info">
+            <div class="withdraw-info-label">Min. Withdrawal</div>
+            <div class="withdraw-info-val">₹100</div>
+          </div>
+        </div>
+        <div class="withdraw-input-wrap">
+          <span class="withdraw-rupee">₹</span>
+          <input class="withdraw-input" type="number"
+                 placeholder="Enter amount (₹)"
+                 id="withdrawInput" min="100" max="3840"/>
+        </div>
+        <button class="withdraw-btn" onclick="doWithdraw()">
+          &#8593; Convert &amp; Withdraw to Bank / UPI
+        </button>
+      </div>
+
+      <!-- ── BONUS INFO MODAL ── -->
+      <div class="coins-info-overlay" id="bonusInfoOverlay" onclick="hideBonusInfo()">
+        <div class="coins-info-modal" onclick="event.stopPropagation()">
+          <div class="coins-info-header">
+            <span class="coins-info-title">&#127873; Bonus Reward — How it Works</span>
+            <div class="coins-info-close" onclick="hideBonusInfo()">&#10005;</div>
+          </div>
+          <div class="coins-info-body">
+            <div class="coins-info-row">
+              <div class="coins-info-icon">&#9733;</div>
+              <div class="coins-info-text">
+                <div class="coins-info-label">How to earn Bonus?</div>
+                <div class="coins-info-desc">Earn Bonus Coins via Daily Login, Referral, Special Events and Promotions.</div>
+              </div>
+            </div>
+            <div class="coins-info-row">
+              <div class="coins-info-icon">&#9654;</div>
+              <div class="coins-info-text">
+                <div class="coins-info-label">Where can Bonus be used?</div>
+                <div class="coins-info-desc">Bonus Coins can be used for Tournament Entry Fee. Not valid for Cash games.</div>
+              </div>
+            </div>
+            <div class="coins-info-row">
+              <div class="coins-info-icon">&#9200;</div>
+              <div class="coins-info-text">
+                <div class="coins-info-label">Expiry</div>
+                <div class="coins-info-desc">Bonus Coins must be used within 30 days of receiving, otherwise they expire.</div>
+              </div>
+            </div>
+            <div class="coins-info-row last">
+              <div class="coins-info-icon">&#9888;</div>
+              <div class="coins-info-text">
+                <div class="coins-info-label">Not Withdrawable</div>
+                <div class="coins-info-desc">Bonus Coins cannot be withdrawn directly — they can only be used in games.</div>
+              </div>
+            </div>
+          </div>
+          <div class="coins-info-bal-strip">
+            <span>Current Bonus Coins</span>
+            <span id="bonusInfoBal">&#127873; 500 Bonus</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── BONUS PANEL (Bonus tab) ── -->
+      <div class="withdraw-panel" id="bonusPanel">
+        <div class="withdraw-row">
+          <div class="withdraw-info">
+            <div class="withdraw-info-label">Available Bonus</div>
+            <div class="withdraw-info-val" id="bonusPanelAmt">₹500</div>
+          </div>
+          <div class="withdraw-info">
+            <div class="withdraw-info-label">Expires In</div>
+            <div class="withdraw-info-val" style="color:#e8c96a;">28 Days</div>
+          </div>
+        </div>
+        <div class="bonus-reward-list">
+          <div class="bonus-reward-item">
+            <div class="bonus-reward-icon">&#128197;</div>
+            <div class="bonus-reward-info">
+              <div class="bonus-reward-name">Daily Login Bonus</div>
+              <div class="bonus-reward-sub">Today's reward</div>
+            </div>
+            <div class="bonus-reward-amt">+₹50</div>
+            <button class="bonus-claim-btn" onclick="claimBonus(this, 50)">Claim</button>
+          </div>
+          <div class="bonus-reward-item">
+            <div class="bonus-reward-icon">&#127942;</div>
+            <div class="bonus-reward-info">
+              <div class="bonus-reward-name">Win Streak Bonus</div>
+              <div class="bonus-reward-sub">3 wins in a row</div>
+            </div>
+            <div class="bonus-reward-amt">+₹100</div>
+            <button class="bonus-claim-btn" onclick="claimBonus(this, 100)">Claim</button>
+          </div>
+          <div class="bonus-reward-item">
+            <div class="bonus-reward-icon">&#128101;</div>
+            <div class="bonus-reward-info">
+              <div class="bonus-reward-name">Referral Bonus</div>
+              <div class="bonus-reward-sub">Friend joined</div>
+            </div>
+            <div class="bonus-reward-amt">+₹200</div>
+            <button class="bonus-claim-btn claimed" disabled>Claimed</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── ADD FUND ── -->
+      <div class="coins-section-title">
+        <div class="coins-section-label">&#9824; Add <span>Fund</span></div>
+      </div>
+
+      <div class="coins-pack-grid">
+        <div class="coins-pack" onclick="buyCoins(50,50)">
+          <div class="pack-coins">₹50</div>
+          <div class="pack-label">Fund</div>
+          <div class="pack-price">&#8377;50</div>
+        </div>
+        <div class="coins-pack" onclick="buyCoins(100,100)">
+          <div class="pack-coins">₹100</div>
+          <div class="pack-label">Fund</div>
+          <div class="pack-price">&#8377;100</div>
+        </div>
+        <div class="coins-pack popular" onclick="buyCoins(200,200)">
+          <div class="pack-tag">POPULAR</div>
+          <div class="pack-coins">₹200</div>
+          <div class="pack-label">Fund</div>
+          <div class="pack-price">&#8377;200</div>
+        </div>
+        <div class="coins-pack" onclick="buyCoins(500,500)">
+          <div class="pack-coins">₹500</div>
+          <div class="pack-label">Fund</div>
+          <div class="pack-price">&#8377;500</div>
+        </div>
+        <div class="coins-pack best" onclick="buyCoins(1000,1000)">
+          <div class="pack-tag">BEST VALUE</div>
+          <div class="pack-coins">₹1,000</div>
+          <div class="pack-label">Fund</div>
+          <div class="pack-price">&#8377;1,000</div>
+        </div>
+        <div class="coins-pack" onclick="buyCoins(2000,2000)">
+          <div class="pack-coins">₹2,000</div>
+          <div class="pack-label">Fund</div>
+          <div class="pack-price">&#8377;2,000</div>
+        </div>
+      </div>
+
+      <!-- Manual amount -->
+      <div class="manual-fund-wrap">
+        <div class="manual-fund-label">Or Enter Amount Manually</div>
+        <div class="manual-fund-input-row">
+          <span class="manual-fund-rupee">₹</span>
+          <input class="manual-fund-input" type="number"
+                 id="manualFundInput" placeholder="Min. ₹25" min="25"
+                 oninput="validateManualFund(this)"/>
+        </div>
+        <div class="manual-fund-hint" id="manualFundHint">Minimum amount: ₹25</div>
+        <button class="add-fund-btn" onclick="doManualAddFund()">&#43; Add Fund</button>
+      </div>
+
+      <!-- ── LATEST OFFERS ── -->
+      <div class="coins-section-title" style="margin-top:8px;">
+        <div class="coins-section-label">&#127881; Latest <span>Offers</span></div>
+      </div>
+
+      <div class="offers-list">
+
+        <div class="offer-card">
+          <div class="offer-card-left">
+            <div class="offer-badge">&#127381; WELCOME</div>
+            <div class="offer-title">First Deposit Bonus</div>
+            <div class="offer-desc">Get 50% extra on your first fund addition. Up to ₹500 bonus credited instantly!</div>
+            <div class="offer-code-row">
+              <span class="offer-code-label">Code:</span>
+              <span class="offer-code">WELCOME50</span>
+            </div>
+          </div>
+          <button class="offer-apply-btn" onclick="applyOffer('WELCOME50')">Apply</button>
+        </div>
+
+        <div class="offer-card">
+          <div class="offer-card-left">
+            <div class="offer-badge" style="background:linear-gradient(135deg,#5dba7d,#2e8a52);color:#fff;">&#9889; FLASH</div>
+            <div class="offer-title">Weekend Flash Deal</div>
+            <div class="offer-desc">Add ₹200 or more this weekend and get ₹50 bonus. Valid Sat–Sun only!</div>
+            <div class="offer-code-row">
+              <span class="offer-code-label">Code:</span>
+              <span class="offer-code">FLASH50</span>
+            </div>
+          </div>
+          <button class="offer-apply-btn" onclick="applyOffer('FLASH50')">Apply</button>
+        </div>
+
+        <div class="offer-card">
+          <div class="offer-card-left">
+            <div class="offer-badge" style="background:linear-gradient(135deg,#e06060,#b03030);color:#fff;">&#128081; VIP</div>
+            <div class="offer-title">VIP Member Offer</div>
+            <div class="offer-desc">Gold Members get 20% cashback on any fund addition above ₹500. Auto-credited!</div>
+            <div class="offer-code-row">
+              <span class="offer-code-label">Code:</span>
+              <span class="offer-code">VIP20</span>
+            </div>
+          </div>
+          <button class="offer-apply-btn" onclick="applyOffer('VIP20')">Apply</button>
+        </div>
+
+        <div class="offer-card">
+          <div class="offer-card-left">
+            <div class="offer-badge" style="background:linear-gradient(135deg,#c9a84c,#8a5e0a);color:#fff;">&#128176; REFER</div>
+            <div class="offer-title">Refer &amp; Earn</div>
+            <div class="offer-desc">Invite a friend and earn ₹100 bonus when they add funds. No limit on referrals!</div>
+            <div class="offer-code-row">
+              <span class="offer-code-label">Code:</span>
+              <span class="offer-code">REFER100</span>
+            </div>
+          </div>
+          <button class="offer-apply-btn" onclick="applyOffer('REFER100')">Apply</button>
+        </div>
+
+      </div><!-- /.offers-list -->
+
+      <!-- ── TRANSACTION HISTORY (mini) ── -->
+      <div class="coins-section-title">
+        <div class="coins-section-label">&#9827; Transaction <span>History</span></div>
+      </div>
+
+      <div class="txn-list">
+        <div class="txn-item">
+          <div class="txn-icon win">&#9650;</div>
+          <div class="txn-info">
+            <div class="txn-name">Blazing Joker Cup — Win</div>
+            <div class="txn-date">Today, 2:30 PM</div>
+          </div>
+          <div class="txn-amt green">+₹1,200</div>
+        </div>
+        <div class="txn-item">
+          <div class="txn-icon loss">&#9660;</div>
+          <div class="txn-info">
+            <div class="txn-name">Golden Ace Entry Fee</div>
+            <div class="txn-date">Today, 11:00 AM</div>
+          </div>
+          <div class="txn-amt red">-₹199</div>
+        </div>
+        <div class="txn-item">
+          <div class="txn-icon add">&#43;</div>
+          <div class="txn-info">
+            <div class="txn-name">Coins Purchased</div>
+            <div class="txn-date">Yesterday, 6:15 PM</div>
+          </div>
+          <div class="txn-amt green">+₹1,200</div>
+        </div>
+        <div class="txn-item">
+          <div class="txn-icon loss">&#9660;</div>
+          <div class="txn-info">
+            <div class="txn-name">Royal Championship Entry</div>
+            <div class="txn-date">Yesterday, 3:00 PM</div>
+          </div>
+          <div class="txn-amt red">-₹199</div>
+        </div>
+      </div>
+
+      <div style="height:28px;"></div>
+    </div><!-- /.coins-scroll -->
+
+  </div><!-- /.coins-page -->
+</div><!-- /.coins-overlay -->
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- JS — common first, then wallet -->
+<script src="../assets/js/common.js"></script>
+<script src="../assets/js/wallet.js"></script>
+<!-- Firebase auth (module) -->
+<script type="module" src="../assets/js/auth.js"></script>
+
+</body>
+</html>
