@@ -10,12 +10,12 @@ import { getFirestore, doc, getDoc }   from "https://www.gstatic.com/firebasejs/
 // 👇 Firebase Config — येथे आपले config paste करा
 // ════════════════════════════════════════
 const firebaseConfig = {
-  apiKey:            "YOUR_API_KEY",
-  authDomain:        "YOUR_PROJECT.firebaseapp.com",
-  projectId:         "YOUR_PROJECT_ID",
-  storageBucket:     "YOUR_PROJECT.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId:             "YOUR_APP_ID"
+  apiKey:            "AIzaSyD8UtspjdYhTY_LmileM0NZcE_24-C5Ask",
+  authDomain:        "patti-king3.firebaseapp.com",
+  projectId:         "patti-king3",
+  storageBucket:     "patti-king3.firebasestorage.app",
+  messagingSenderId: "369645745216",
+  appId:             "1:369645745216:web:b9c636a56df1821e435ba5"
 };
 // ════════════════════════════════════════
 
