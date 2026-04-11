@@ -31,8 +31,10 @@ window.onpopstate = function () {
 };
 // २. त्यानंतर तुमचे Auth State Logic
 onAuthStateChanged(auth, async (user) => {
-  if (!user) {
-    window.location.replace("index.html");
+if (!user) {
+    window.location.replace("../index.html");
+    return;
+}
     return;
   }
   try {
@@ -68,7 +70,7 @@ onAuthStateChanged(auth, async (user) => {
 // ── Logout Function ──
 window.logoutUser = () => {
   signOut(auth).then(() => {
-    window.location.href = "../index.html"; // Redirect to login page
+    window.location.replace("../index.html"); // Redirect to login page
   }).catch((error) => {
     console.error("Logout error:", error);
   });
