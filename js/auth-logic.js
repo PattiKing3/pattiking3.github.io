@@ -103,7 +103,7 @@ window.logoutUser = () => {
   if (typeof toast === 'function') toast('Logging out...', '');
   signOut(auth).then(() => {
     // Redirect to login or landing page
-    window.location.href("home/home.html"); 
+    window.location.href = "home/home.html"; 
   }).catch((error) => {
     console.error("Logout error:", error);
     if (typeof toast === 'function') toast('Logout failed!', 'error');
