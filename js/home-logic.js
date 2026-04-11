@@ -32,7 +32,7 @@ window.onpopstate = function () {
 // २. त्यानंतर तुमचे Auth State Logic
 onAuthStateChanged(auth, async (user) => {
   if (!user) {
-    window.location.replace("../index.html");
+    window.location.replace("index.html");
     return;
   }
   try {
