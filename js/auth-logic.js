@@ -184,14 +184,17 @@ try {
     const user = result.user;
     const name = user.displayName || "Player";
     await saveUser(user);
+    
     toast('✓ ' + name + ' — Google Login Successful!', 'success');
+    
     setTimeout(() => showSuccess(name), 600);
   }
 } catch (err) {
   if (err.code !== 'auth/no-auth-event') {
     console.error("Redirect error:", err.code);
+    toast('Login error: ' + err.code, 'error');
   }
-}
+        }
 
 // ── Email/Password Register ──
 window._firebaseRegister = async function(name, email, password) {
