@@ -11,14 +11,6 @@
 <!-- ✅ Fix 1: Correct CSS paths -->
 <link rel="stylesheet" href="../css/home.css">
 <link rel="stylesheet" href="../css/wallet.css">
-<style>
-  .coins-overlay {
-    bottom: var(--nav-h) !important;
-  }
-  .nav-lobby .nav-icon {
-    transform: translateY(-6px) !important;
-  }
-</style>
 </head>
 <body>
 
@@ -407,7 +399,20 @@
     <div class="nav-label">Leaderboard</div>
   </div>
 </nav>
-
+ <style>
+  .coins-overlay {
+    bottom: 0 !important;
+  }
+  .bottom-nav {
+    position: fixed !important;
+    bottom: 16px !important;
+    left: 16px !important;
+    right: 16px !important;
+    border-radius: 20px !important;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5) !important;
+    z-index: 9999 !important;
+  }
+ </style>
 <!-- Toast -->
 <div class="toast" id="toast"></div>
 
