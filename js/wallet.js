@@ -3,6 +3,9 @@
  * Wallet / Coins page — open/close, tabs, fund, bonus, withdraw, offers
  * Depends on: common.js  (toast, setEl)
  */
+/* ══════════════════════════════════════════
+   
+   ══════════════════════════════════════════ */
 // १. Firebase कडून डेटाबेस (db) आणि ऑथेंटिकेशन (auth) मिळवा
 import { db, auth } from './firebase.js';
 
@@ -14,6 +17,10 @@ import {
     serverTimestamp, 
     onSnapshot 
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+/* ══════════════════════════════════════════
+   Core Transaction Engine
+   ══════════════════════════════════════════ */
 
 async function createTransaction(amount, type, category, status, description) {
     const user = auth.currentUser;
@@ -180,7 +187,7 @@ function doWithdraw() {
 }
 
 /* ══════════════════════════════════════════
-   INIT
+   Global Exports
    ══════════════════════════════════════════ */
 function syncWalletUI() {
     auth.onAuthStateChanged((user) => {
