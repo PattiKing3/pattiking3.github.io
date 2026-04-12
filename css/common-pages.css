@@ -407,6 +407,8 @@ html, body {
   background: var(--gold); border-radius: 50%;
   box-shadow: 0 0 8px rgba(201,168,76,0.8);
 }
+/* ── Inner pages — Bottom Nav hide ── */
+.bottom-nav { display: none !important; }
 
 /* ── GC coin icon ── */
 .gc {
