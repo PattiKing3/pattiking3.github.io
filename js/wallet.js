@@ -155,24 +155,24 @@ function hideBonusInfo() {
 }
 
 /* ══════════════════════════════════════════
-   BONUS CLAIM
+   BONUS CLAIM (Updated: 1000 Points = ₹1)
    ══════════════════════════════════════════ */
-function claimBonus(btn, amt) {
+function claimBonus(btn, amtPoints) {
   if (!btn || btn.disabled) return;
+
+  // १. लॉजिक: पॉईंट्सचे रुपयांत रूपांतर (उदा. 1000 pts = ₹1)
+  const rupees = amtPoints / 1000; 
+
+  // २. डेटाबेसमध्ये व्यवहार नोंदवा
+  // येथे आपण 'game_win' कॅटेगरी वापरत आहोत जेणेकरून पैसे विनिंगमध्ये जमा होतील
+  createTransaction(rupees, 'credit', 'game_win', 'success', `Claimed ${amtPoints} bonus points`);
+
+  // ३. UI बदल
   btn.textContent = 'Claimed';
   btn.disabled    = true;
   btn.classList.add('claimed');
-  const bonusEl = document.getElementById('bonusDisplay');
-  const panelEl = document.getElementById('bonusPanelAmt');
-  const infoEl  = document.getElementById('bonusInfoBal');
-  if (bonusEl) {
-    const cur = parseInt(bonusEl.textContent.replace(/,/g, '')) || 0;
-    const neo = (cur + amt).toLocaleString('en-IN');
-    bonusEl.textContent   = neo;
-    if (panelEl) panelEl.textContent = '₹' + neo;
-    if (infoEl)  infoEl.textContent  = '🎁 ₹' + neo + ' Bonus';
-  }
-  toast('🎁 ₹' + amt + ' Bonus claimed!', 'success');
+
+  toast(`🎁 ${amtPoints} points (₹${rupees}) Added to your wallet!`, 'success');
 }
 
 /* ══════════════════════════════════════════
@@ -188,25 +188,49 @@ function doWithdraw() {
 }
 
 /* ══════════════════════════════════════════
-   Global Exports
+   Real-time UI Sync (onSnapshot)
    ══════════════════════════════════════════ */
 function syncWalletUI() {
     auth.onAuthStateChanged((user) => {
         if (user) {
             const userRef = doc(db, "users", user.uid);
+
+            // onSnapshot मुळे डेटाबेसमध्ये बदल झाला की हे फंक्शन आपोआप रन होते
             onSnapshot(userRef, (docSnap) => {
                 if (docSnap.exists()) {
                     const data = docSnap.data();
-                    if (document.getElementById('coinsBalDisplay')) 
+
+                    // १. Total Coins अपडेट करा (तुमच्या होम स्क्रीन किंवा वॉलेट हेडरसाठी)
+                    if (document.getElementById('coinsBalDisplay')) {
                         document.getElementById('coinsBalDisplay').textContent = (data.coins || 0).toLocaleString('en-IN');
-                    if (document.getElementById('winningVal')) 
+                    }
+
+                    // २. Winning Balance अपडेट करा (विथड्रॉवल पेजसाठी)
+                    if (document.getElementById('winningVal')) {
                         document.getElementById('winningVal').textContent = '₹' + (data.coins_winning || 0).toLocaleString('en-IN');
+                    }
+
+                    // ३. विथड्रॉवल पेजवरील 'Available Amount' अपडेट करा
+                    if (document.getElementById('withdrawAvail')) {
+                        document.getElementById('withdrawAvail').textContent = '₹' + (data.coins_winning || 0).toLocaleString('en-IN');
+                    }
+
+                    // ४. बोनस पॉईंट्स अपडेट करा (१०node-red०० pts = ₹१ लॉजिकसाठी)
+                    // तुमच्या डेटाबेसमध्ये 'bonus_points' नावाचे फील्ड असेल असे गृहीत धरले आहे
+                    if (document.getElementById('bonusDisplay')) {
+                        document.getElementById('bonusDisplay').textContent = (data.bonus_points || 0).toLocaleString('en-IN');
+                    }
+
+                    // ५. बोनस पॅनलमधील रुपयांमधील किंमत (Optional)
+                    if (document.getElementById('bonusPanelAmt')) {
+                        const bonusInRupees = (data.bonus_points || 0) / 1000;
+                        document.getElementById('bonusPanelAmt').textContent = '₹' + bonusInRupees.toFixed(2);
+                    }
                 }
             });
         }
     });
 }
-
 document.addEventListener('DOMContentLoaded', syncWalletUI);
 window.buyCoins = buyCoins;
 window.doWithdraw = doWithdraw;
