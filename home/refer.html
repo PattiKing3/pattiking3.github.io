@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Patti King — Refer & Earn</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/pages.css">
+<style>
+/* Hero banner */
+.refer-hero {
+  margin: 0 18px 16px;
+  background: linear-gradient(135deg, rgba(201,168,76,0.22), rgba(168,124,48,0.1));
+  border: 1.5px solid var(--border);
+  border-radius: 20px; padding: 24px 20px;
+  text-align: center; position: relative; overflow: hidden;
+}
+.refer-hero::after {
+  content: '♠'; position: absolute; right: -15px; bottom: -25px;
+  font-size: 130px; opacity: 0.05; pointer-events: none; color: var(--gold);
+}
+.refer-hero-icon { font-size: 52px; margin-bottom: 10px; }
+.refer-hero-title {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 22px; font-weight: 700;
+  background: linear-gradient(135deg, var(--gold3), var(--gold));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  margin-bottom: 6px;
+}
+.refer-hero-sub { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 18px; }
+.refer-bonus-pill {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: linear-gradient(135deg, #c9a84c, #a87c30);
+  border-radius: 50px; padding: 8px 20px;
+  font-size: 14px; font-weight: 800; color: #0b1a0e;
+  box-shadow: 0 4px 14px rgba(168,124,48,0.4);
+  margin-bottom: 6px;
+}
+.refer-each { font-size: 11px; color: var(--muted); margin-top: 4px; }
+
+/* Referral code box */
+.code-box {
+  background: rgba(0,0,0,0.3); border: 1.5px dashed var(--border);
+  border-radius: 14px; padding: 16px;
+  margin-bottom: 16px; text-align: center;
+}
+.code-label { font-size: 10px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+.code-value {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 28px; font-weight: 700; letter-spacing: 8px;
+  background: linear-gradient(135deg, var(--gold3), var(--gold));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  margin-bottom: 12px;
+}
+.code-btns { display: flex; gap: 10px; }
+.code-btn {
+  flex: 1; padding: 11px;
+  border: 1.5px solid var(--border); border-radius: 11px;
+  background: rgba(201,168,76,0.1); color: var(--gold2);
+  font-family: 'Source Sans 3', Arial, sans-serif;
+  font-size: 12px; font-weight: 800; letter-spacing: 0.3px;
+  cursor: pointer; transition: background 0.2s; display: flex; align-items: center; justify-content: center; gap: 6px;
+}
+.code-btn:hover { background: rgba(201,168,76,0.2); }
+.code-btn.primary {
+  background: linear-gradient(135deg, #c9a84c, #a87c30);
+  color: #0b1a0e; border-color: #a87c30;
+  box-shadow: 0 4px 14px rgba(168,124,48,0.35);
+}
+.code-btn.primary:hover { opacity: 0.9; }
+
+/* How it works steps */
+.steps-row { display: flex; gap: 0; padding: 14px 0 4px; position: relative; }
+.steps-row::before {
+  content: ''; position: absolute;
+  top: 32px; left: calc(33.3% / 2); right: calc(33.3% / 2);
+  height: 2px; background: linear-gradient(90deg, var(--gold), var(--gold2), var(--gold));
+  opacity: 0.3; border-radius: 1px;
+}
+.step-item { flex: 1; text-align: center; padding: 0 6px; }
+.step-num {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: linear-gradient(135deg, #c9a84c, #a87c30);
+  color: #0b1a0e; font-size: 14px; font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 8px;
+  box-shadow: 0 3px 10px rgba(168,124,48,0.4);
+  position: relative; z-index: 1;
+}
+.step-label { font-size: 11px; font-weight: 700; color: var(--text); line-height: 1.4; }
+.step-sub   { font-size: 9px;  color: var(--muted); margin-top: 2px; line-height: 1.3; }
+
+/* Referral earnings summary */
+.earn-summary { display: flex; gap: 10px; margin-bottom: 16px; }
+.earn-box {
+  flex: 1; background: linear-gradient(160deg, #ffffff, #f4f0e8, #ede8dc);
+  border: 1.5px solid rgba(201,168,76,0.4); border-radius: 14px;
+  padding: 14px 10px; text-align: center;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.12);
+}
+.earn-label { font-size: 9px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: #8a6020; margin-bottom: 5px; }
+.earn-val   { font-size: 17px; font-weight: 800; }
+.earn-val.gold {
+  background: linear-gradient(135deg, #8a5e0a, #c9a84c);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.earn-val.green { color: #2e8a52; }
+
+/* Friends list */
+.friend-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 16px; border-bottom: 1px solid rgba(201,168,76,0.1);
+}
+.friend-row:last-child { border-bottom: none; }
+.friend-avatar {
+  width: 40px; height: 40px; border-radius: 12px;
+  background: linear-gradient(135deg, rgba(201,168,76,0.25), rgba(201,168,76,0.1));
+  border: 1.5px solid rgba(201,168,76,0.35);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; flex-shrink: 0;
+}
+.friend-info { flex: 1; }
+.friend-name { font-size: 13px; font-weight: 700; color: #2a1400; }
+.friend-date { font-size: 10px; color: #8a6020; margin-top: 2px; }
+.friend-amt  { font-size: 13px; font-weight: 800; color: #2e8a52; flex-shrink: 0; }
+</style>
+</head>
+<body>
+<div class="bg"></div>
+
+<div class="page-wrap">
+
+  <div class="page-header">
+    <div class="page-back" onclick="history.back()">&#8592;</div>
+    <div class="page-title">Refer & Earn</div>
+    <div class="page-icon">🎁</div>
+  </div>
+
+  <div class="page-scroll">
+
+    <!-- Hero -->
+    <div class="refer-hero">
+      <div class="refer-hero-icon">🤝</div>
+      <div class="refer-hero-title">Invite Friends &<br>Earn Together!</div>
+      <div class="refer-hero-sub">Share your code and earn bonus coins for every friend who joins and adds funds to Patti King.</div>
+      <div class="refer-bonus-pill">🪙 ₹100 Bonus per Referral</div>
+      <div class="refer-each">Your friend also gets ₹50 welcome bonus!</div>
+    </div>
+
+    <!-- Referral Code -->
+    <div class="code-box">
+      <div class="code-label">Your Referral Code</div>
+      <div class="code-value" id="referCode">RAHUL50</div>
+      <div class="code-btns">
+        <div class="code-btn" onclick="copyCode()">📋 Copy</div>
+        <div class="code-btn primary" onclick="shareCode()">🚀 Share Now</div>
+      </div>
+    </div>
+
+    <!-- How It Works -->
+    <div class="sec-card" style="padding: 14px;">
+      <div class="sec-label">How It Works</div>
+      <div class="steps-row">
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-label">Share Code</div>
+          <div class="step-sub">Send your unique referral code to friends</div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-label">Friend Joins</div>
+          <div class="step-sub">They register using your code</div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <div class="step-label">You Earn!</div>
+          <div class="step-sub">₹100 credited when they add funds</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Earnings Summary -->
+    <div class="earn-summary">
+      <div class="earn-box">
+        <div class="earn-label">Friends Referred</div>
+        <div class="earn-val gold">12</div>
+      </div>
+      <div class="earn-box">
+        <div class="earn-label">Total Earned</div>
+        <div class="earn-val green">₹1,200</div>
+      </div>
+      <div class="earn-box">
+        <div class="earn-label">Pending</div>
+        <div class="earn-val gold">₹200</div>
+      </div>
+    </div>
+
+    <!-- Share Channels -->
+    <div class="sec-card">
+      <div class="sec-label">Share Via</div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap; padding: 12px 16px 16px;">
+        <div class="code-btn" style="flex: 0 0 auto; padding: 10px 18px;" onclick="shareVia('WhatsApp')">💬 WhatsApp</div>
+        <div class="code-btn" style="flex: 0 0 auto; padding: 10px 18px;" onclick="shareVia('Telegram')">✈️ Telegram</div>
+        <div class="code-btn" style="flex: 0 0 auto; padding: 10px 18px;" onclick="shareVia('Instagram')">📸 Instagram</div>
+        <div class="code-btn" style="flex: 0 0 auto; padding: 10px 18px;" onclick="shareVia('SMS')">📱 SMS</div>
+      </div>
+    </div>
+
+    <!-- Referred Friends -->
+    <div class="sec-card">
+      <div class="sec-label">Friends You Referred</div>
+      <div class="friend-row">
+        <div class="friend-avatar">👤</div>
+        <div class="friend-info">
+          <div class="friend-name">Amit S.</div>
+          <div class="friend-date">Joined • 10 Apr 2026 • Fund Added ✓</div>
+        </div>
+        <div class="friend-amt">+₹100</div>
+      </div>
+      <div class="friend-row">
+        <div class="friend-avatar">👤</div>
+        <div class="friend-info">
+          <div class="friend-name">Priya M.</div>
+          <div class="friend-date">Joined • 8 Apr 2026 • Fund Added ✓</div>
+        </div>
+        <div class="friend-amt">+₹100</div>
+      </div>
+      <div class="friend-row">
+        <div class="friend-avatar">👤</div>
+        <div class="friend-info">
+          <div class="friend-name">Suresh K.</div>
+          <div class="friend-date">Joined • 5 Apr 2026 • Pending…</div>
+        </div>
+        <div class="friend-amt" style="color:#b8860b;">⏳ ₹100</div>
+      </div>
+      <div class="friend-row">
+        <div class="friend-avatar">👤</div>
+        <div class="friend-info">
+          <div class="friend-name">Neha P.</div>
+          <div class="friend-date">Joined • 2 Apr 2026 • Fund Added ✓</div>
+        </div>
+        <div class="friend-amt">+₹100</div>
+      </div>
+    </div>
+
+    <!-- Terms -->
+    <div class="dark-card" style="margin-top: 4px;">
+      <div class="dark-card-title">📋 Terms & Conditions</div>
+      <div class="dark-card-sub">
+        • Bonus is credited when your referred friend adds their first deposit of ₹50 or more.<br>
+        • Referral bonus is added to your Bonus Coins wallet and can be used for entry fees.<br>
+        • There is no limit on the number of referrals you can make.<br>
+        • Self-referrals or fake accounts will result in account suspension.<br>
+        • Bonus is valid for 30 days from the date of crediting.
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Bottom Nav -->
+<nav class="bottom-nav">
+  <div class="nav-item" onclick="window.location.href='home.html'">
+    <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg></div>
+    <div class="nav-label">Home</div>
+  </div>
+  <div class="nav-item" onclick="window.location.href='wallet.html'">
+    <div class="nav-icon"><svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M16 12a1 1 0 1 0 2 0 1 1 0 0 0-2 0"/><path d="M2 10h20"/></svg></div>
+    <div class="nav-label">Wallet</div>
+  </div>
+  <div class="nav-item nav-lobby" onclick="window.location.href='game_lobby.html'">
+    <div class="nav-icon"><svg viewBox="0 0 100 100" width="26" height="26"><path d="M50 5 C50 5 10 35 10 58 C10 72 20 80 34 76 C30 84 26 90 20 93 L80 93 C74 90 70 84 66 76 C80 80 90 72 90 58 C90 35 50 5 50 5Z" fill="#ffffff"/></svg></div>
+    <div class="nav-label">Game Lobby</div>
+  </div>
+  <div class="nav-item active">
+    <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+    <div class="nav-label">Friends</div>
+  </div>
+  <div class="nav-item">
+    <div class="nav-icon"><svg viewBox="0 0 24 24"><rect x="2" y="14" width="4" height="7" rx="1"/><rect x="9" y="9" width="4" height="12" rx="1"/><rect x="16" y="4" width="4" height="17" rx="1"/></svg></div>
+    <div class="nav-label">Leaderboard</div>
+  </div>
+</nav>
+
+<div class="toast" id="toast"></div>
+<script>
+let toastT;
+function toast(msg, type='') {
+  const el = document.getElementById('toast');
+  el.textContent = msg; el.className = 'toast show ' + type;
+  clearTimeout(toastT); toastT = setTimeout(() => el.classList.remove('show'), 2500);
+}
+function copyCode() {
+  const code = document.getElementById('referCode').textContent;
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(code).then(() => toast('✓ Code "' + code + '" copied!', 'success'));
+  } else {
+    toast('✓ Code "' + code + '" copied!', 'success');
+  }
+}
+function shareCode() {
+  const code = document.getElementById('referCode').textContent;
+  const msg  = 'Join Patti King and play Rummy! Use my referral code ' + code + ' and get ₹50 bonus. Download now: https://pattiking.app';
+  if (navigator.share) {
+    navigator.share({ title: 'Patti King', text: msg });
+  } else {
+    toast('Share: ' + msg, 'success');
+  }
+}
+function shareVia(platform) {
+  toast('Sharing via ' + platform + '...', 'success');
+}
+</script>
+</body>
+</html>

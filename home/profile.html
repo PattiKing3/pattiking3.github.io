@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Patti King — My Profile</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/pages.css">
+<style>
+/* Level progress bar */
+.level-bar-wrap { padding: 0 18px 18px; }
+.level-bar-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 8px;
+}
+.level-bar-label { font-size: 11px; font-weight: 700; color: var(--gold2); }
+.level-bar-pct   { font-size: 11px; color: var(--muted); }
+.level-bar-track {
+  height: 8px; background: rgba(255,255,255,0.1);
+  border-radius: 50px; overflow: hidden;
+  border: 1px solid rgba(201,168,76,0.2);
+}
+.level-bar-fill {
+  height: 100%; width: 68%;
+  background: linear-gradient(90deg, #c9a84c, #ffe97a);
+  border-radius: 50px;
+  box-shadow: 0 0 8px rgba(201,168,76,0.5);
+  transition: width 1s ease;
+}
+
+/* Achievement badges */
+.badge-scroll { display: flex; gap: 10px; padding: 0 18px 4px; overflow-x: auto; }
+.badge-scroll::-webkit-scrollbar { display: none; }
+.badge-item {
+  flex-shrink: 0; text-align: center;
+  width: 72px;
+}
+.badge-icon {
+  width: 60px; height: 60px; border-radius: 18px;
+  background: linear-gradient(135deg, #ffffff, #f4f0e8);
+  border: 1.5px solid rgba(201,168,76,0.4);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px; margin: 0 auto 6px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+}
+.badge-icon.locked {
+  filter: grayscale(1) opacity(0.4);
+}
+.badge-name { font-size: 9px; font-weight: 700; color: var(--muted); letter-spacing: 0.2px; line-height: 1.2; }
+
+/* Edit avatar button */
+.edit-avatar-btn {
+  position: absolute; bottom: 2px; right: 2px;
+  width: 26px; height: 26px; border-radius: 50%;
+  background: linear-gradient(135deg, #c9a84c, #a87c30);
+  border: 2px solid var(--g1);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; cursor: pointer;
+}
+.profile-avatar-wrap { position: relative; display: inline-block; }
+.profile-avatar-outer { display: flex; flex-direction: column; align-items: center; padding: 24px 0 10px; }
+
+/* KYC Strip */
+.kyc-strip {
+  display: flex; align-items: center; gap: 10px;
+  padding: 11px 16px;
+  background: rgba(93,186,125,0.12); border: 1px solid rgba(93,186,125,0.3);
+  border-radius: 12px; margin-bottom: 16px;
+  cursor: pointer;
+}
+.kyc-icon { font-size: 20px; flex-shrink: 0; }
+.kyc-text { flex: 1; font-size: 12px; font-weight: 700; color: #2e8a52; }
+.kyc-text span { display: block; font-size: 10px; font-weight: 600; color: #5dba7d; margin-top: 1px; }
+.kyc-arrow { color: #5dba7d; font-size: 15px; }
+.kyc-strip.pending { background: rgba(201,168,76,0.1); border-color: rgba(201,168,76,0.3); }
+.kyc-strip.pending .kyc-text { color: #b8860b; }
+.kyc-strip.pending .kyc-text span { color: #c9a84c; }
+.kyc-strip.pending .kyc-arrow { color: #c9a84c; }
+</style>
+</head>
+<body>
+<div class="bg"></div>
+
+<div class="page-wrap">
+
+  <!-- Header -->
+  <div class="page-header">
+    <div class="page-back" onclick="history.back()">&#8592;</div>
+    <div class="page-title">My Profile</div>
+    <div class="page-icon" onclick="toast('Edit Profile coming soon!','')">✏️</div>
+  </div>
+
+  <div class="page-scroll">
+
+    <!-- Avatar & Name -->
+    <div class="profile-avatar-outer">
+      <div class="profile-avatar-wrap">
+        <div class="profile-avatar">👑</div>
+        <div class="edit-avatar-btn" onclick="toast('Change avatar coming soon!','')">📷</div>
+      </div>
+      <div class="profile-name" id="profileName">Rahul K.</div>
+      <div class="profile-level">★ Gold Level Player</div>
+      <div class="profile-uid">UID: PK-2024-8472</div>
+    </div>
+
+    <!-- Level Progress -->
+    <div class="level-bar-wrap">
+      <div class="level-bar-header">
+        <div class="level-bar-label">Gold → Platinum (68%)</div>
+        <div class="level-bar-pct">6,800 / 10,000 XP</div>
+      </div>
+      <div class="level-bar-track">
+        <div class="level-bar-fill"></div>
+      </div>
+    </div>
+
+    <!-- Stats Grid -->
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-icon">🏆</div>
+        <div class="stat-label">Tournaments Won</div>
+        <div class="stat-value">24</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🎴</div>
+        <div class="stat-label">Games Played</div>
+        <div class="stat-value">312</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">💰</div>
+        <div class="stat-label">Total Winnings</div>
+        <div class="stat-value green">₹48,200</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🔥</div>
+        <div class="stat-label">Win Streak</div>
+        <div class="stat-value">7 Games</div>
+      </div>
+    </div>
+
+    <!-- KYC Status -->
+    <div class="kyc-strip" onclick="toast('KYC Verified ✓','success')">
+      <div class="kyc-icon">✅</div>
+      <div class="kyc-text">KYC Verified
+        <span>Your identity is fully verified</span>
+      </div>
+      <div class="kyc-arrow">›</div>
+    </div>
+
+    <!-- Personal Info -->
+    <div class="sec-card">
+      <div class="sec-label">Personal Information</div>
+      <div class="list-row" onclick="editField('Full Name')">
+        <div class="row-icon">👤</div>
+        <div class="row-body">
+          <div class="row-title">Full Name</div>
+          <div class="row-sub">Rahul Kale</div>
+        </div>
+        <div class="row-right"><div class="row-arrow">›</div></div>
+      </div>
+      <div class="list-row" onclick="editField('Mobile Number')">
+        <div class="row-icon">📱</div>
+        <div class="row-body">
+          <div class="row-title">Mobile Number</div>
+          <div class="row-sub">+91 98765 43210 • Verified ✓</div>
+        </div>
+        <div class="row-right"><div class="row-arrow">›</div></div>
+      </div>
+      <div class="list-row" onclick="editField('Email ID')">
+        <div class="row-icon">📧</div>
+        <div class="row-body">
+          <div class="row-title">Email ID</div>
+          <div class="row-sub">rahul.k@gmail.com • Verified ✓</div>
+        </div>
+        <div class="row-right"><div class="row-arrow">›</div></div>
+      </div>
+      <div class="list-row" onclick="editField('Date of Birth')">
+        <div class="row-icon">🎂</div>
+        <div class="row-body">
+          <div class="row-title">Date of Birth</div>
+          <div class="row-sub">15 June 1995</div>
+        </div>
+        <div class="row-right"><div class="row-arrow">›</div></div>
+      </div>
+      <div class="list-row" onclick="editField('State')">
+        <div class="row-icon">🗺️</div>
+        <div class="row-body">
+          <div class="row-title">State</div>
+          <div class="row-sub">Maharashtra</div>
+        </div>
+        <div class="row-right"><div class="row-arrow">›</div></div>
+      </div>
+    </div>
+
+    <!-- Bank / UPI -->
+    <div class="sec-card">
+      <div class="sec-label">Bank & Payout Details</div>
+      <div class="list-row" onclick="toast('Bank details page coming soon!','')">
+        <div class="row-icon">🏦</div>
+        <div class="row-body">
+          <div class="row-title">Bank Account</div>
+          <div class="row-sub">SBI •••• 4521 • Added ✓</div>
+        </div>
+        <div class="row-right"><div class="row-badge gold">PRIMARY</div><div class="row-arrow">›</div></div>
+      </div>
+      <div class="list-row" onclick="toast('UPI details coming soon!','')">
+        <div class="row-icon">💳</div>
+        <div class="row-body">
+          <div class="row-title">UPI ID</div>
+          <div class="row-sub">rahul@ybl</div>
+        </div>
+        <div class="row-right"><div class="row-arrow">›</div></div>
+      </div>
+      <div class="list-row" onclick="toast('Add new bank account coming soon!','')">
+        <div class="row-icon blue">➕</div>
+        <div class="row-body">
+          <div class="row-title">Add New Account</div>
+          <div class="row-sub">Bank, UPI, or Wallet</div>
+        </div>
+        <div class="row-right"><div class="row-arrow">›</div></div>
+      </div>
+    </div>
+
+    <!-- Achievements -->
+    <div style="padding: 0 0 8px;">
+      <div class="sec-label" style="padding: 14px 0 10px; color: var(--gold); font-size: 11px; letter-spacing: 0.5px; font-weight: 800;">🏅 Achievements</div>
+    </div>
+    <div class="badge-scroll">
+      <div class="badge-item">
+        <div class="badge-icon">🥇</div>
+        <div class="badge-name">First Win</div>
+      </div>
+      <div class="badge-item">
+        <div class="badge-icon">🔥</div>
+        <div class="badge-name">7-Game Streak</div>
+      </div>
+      <div class="badge-item">
+        <div class="badge-icon">🏆</div>
+        <div class="badge-name">Tournament Pro</div>
+      </div>
+      <div class="badge-item">
+        <div class="badge-icon">💎</div>
+        <div class="badge-name">Gold Member</div>
+      </div>
+      <div class="badge-item">
+        <div class="badge-icon locked">👑</div>
+        <div class="badge-name">Platinum Elite</div>
+      </div>
+      <div class="badge-item">
+        <div class="badge-icon locked">🌟</div>
+        <div class="badge-name">Legend</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Bottom Nav -->
+<nav class="bottom-nav">
+  <div class="nav-item" onclick="window.location.href='home.html'">
+    <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg></div>
+    <div class="nav-label">Home</div>
+  </div>
+  <div class="nav-item" onclick="window.location.href='wallet.html'">
+    <div class="nav-icon"><svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M16 12a1 1 0 1 0 2 0 1 1 0 0 0-2 0"/><path d="M2 10h20"/></svg></div>
+    <div class="nav-label">Wallet</div>
+  </div>
+  <div class="nav-item nav-lobby" onclick="window.location.href='game_lobby.html'">
+    <div class="nav-icon"><svg viewBox="0 0 100 100" width="26" height="26"><path d="M50 5 C50 5 10 35 10 58 C10 72 20 80 34 76 C30 84 26 90 20 93 L80 93 C74 90 70 84 66 76 C80 80 90 72 90 58 C90 35 50 5 50 5Z" fill="#ffffff"/></svg></div>
+    <div class="nav-label">Game Lobby</div>
+  </div>
+  <div class="nav-item active">
+    <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+    <div class="nav-label">Friends</div>
+  </div>
+  <div class="nav-item" onclick="window.location.href='leaderboard.html'">
+    <div class="nav-icon"><svg viewBox="0 0 24 24"><rect x="2" y="14" width="4" height="7" rx="1"/><rect x="9" y="9" width="4" height="12" rx="1"/><rect x="16" y="4" width="4" height="17" rx="1"/></svg></div>
+    <div class="nav-label">Leaderboard</div>
+  </div>
+</nav>
+
+<div class="toast" id="toast"></div>
+<script>
+let toastT;
+function toast(msg, type='') {
+  const el = document.getElementById('toast');
+  el.textContent = msg; el.className = 'toast show ' + type;
+  clearTimeout(toastT); toastT = setTimeout(() => el.classList.remove('show'), 2500);
+}
+function editField(field) { toast('Edit ' + field + ' coming soon!', ''); }
+</script>
+</body>
+</html>

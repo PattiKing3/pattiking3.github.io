@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Patti King — Transaction History</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/pages.css">
+<style>
+/* Filter chips row */
+.filter-bar {
+  display: flex; gap: 8px; overflow-x: auto; padding: 12px 18px 0;
+  scrollbar-width: none;
+}
+.filter-bar::-webkit-scrollbar { display: none; }
+.filter-chip {
+  flex-shrink: 0; padding: 7px 16px; border-radius: 50px;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.3px; text-transform: uppercase;
+  border: 1.5px solid rgba(201,168,76,0.35);
+  color: var(--muted); background: rgba(255,255,255,0.06);
+  cursor: pointer; transition: 0.18s; white-space: nowrap;
+}
+.filter-chip.active {
+  background: linear-gradient(135deg, #ffffff, #f5ead2, #ede0c0);
+  border-color: rgba(201,168,76,0.5); color: #3a1a00;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+}
+.filter-chip:hover:not(.active) { background: rgba(255,255,255,0.1); color: var(--text); }
+
+/* Summary strip */
+.summary-strip {
+  display: flex; gap: 10px; padding: 14px 18px 6px;
+}
+.sum-box {
+  flex: 1; background: linear-gradient(160deg, #ffffff, #f4f0e8, #ede8dc);
+  border: 1.5px solid rgba(201,168,76,0.4); border-radius: 14px;
+  padding: 12px; text-align: center;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.12);
+}
+.sum-label { font-size: 9px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: #8a6020; margin-bottom: 5px; }
+.sum-val   { font-size: 16px; font-weight: 800; }
+.sum-val.green { color: #2e8a52; }
+.sum-val.red   { color: #c04040; }
+.sum-val.gold  {
+  background: linear-gradient(135deg, #8a5e0a, #c9a84c);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+
+/* Date group */
+.date-group { padding: 14px 18px 4px; }
+.date-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.5px;
+  text-transform: uppercase; color: var(--gold); opacity: 0.75;
+  margin-bottom: 8px;
+}
+
+/* Transaction row */
+.txn-card {
+  background: linear-gradient(160deg, #ffffff, #f4f0e8, #ede8dc);
+  border: 1.5px solid rgba(201,168,76,0.3); border-radius: 14px;
+  margin-bottom: 10px; overflow: hidden;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+  transition: transform 0.15s;
+  cursor: pointer;
+}
+.txn-card:hover { transform: translateY(-1px); }
+.txn-card:active { transform: scale(0.98); }
+.txn-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 13px 14px;
+}
+.txn-ico {
+  width: 42px; height: 42px; border-radius: 12px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+}
+.txn-ico.win    { background: rgba(93,186,125,0.18);  border: 1px solid rgba(93,186,125,0.3); }
+.txn-ico.loss   { background: rgba(224,96,96,0.18);   border: 1px solid rgba(224,96,96,0.3);  }
+.txn-ico.add    { background: rgba(201,168,76,0.18);  border: 1px solid rgba(201,168,76,0.3); }
+.txn-ico.bonus  { background: rgba(120,80,220,0.15);  border: 1px solid rgba(120,80,220,0.3); }
+.txn-ico.fee    { background: rgba(200,120,40,0.15);  border: 1px solid rgba(200,120,40,0.3); }
+.txn-info       { flex: 1; min-width: 0; }
+.txn-name       { font-size: 13px; font-weight: 700; color: #2a1400; line-height: 1.3; }
+.txn-meta       { font-size: 10px; color: #8a6020; margin-top: 3px; display: flex; gap: 8px; flex-wrap: wrap; }
+.txn-meta span  { white-space: nowrap; }
+.txn-right      { text-align: right; flex-shrink: 0; }
+.txn-amt        { font-size: 15px; font-weight: 800; }
+.txn-amt.green  { color: #2e8a52; }
+.txn-amt.red    { color: #c04040; }
+.txn-status     { font-size: 9px; font-weight: 700; margin-top: 3px; }
+.txn-status.done    { color: #2e8a52; }
+.txn-status.pending { color: #b8860b; }
+.txn-status.failed  { color: #c04040; }
+</style>
+</head>
+<body>
+<div class="bg"></div>
+
+<div class="page-wrap">
+
+  <!-- Header -->
+  <div class="page-header">
+    <div class="page-back" onclick="history.back()">&#8592;</div>
+    <div class="page-title">Transaction History</div>
+    <div class="page-icon">📋</div>
+  </div>
+
+  <!-- Filter Chips -->
+  <div class="filter-bar">
+    <div class="filter-chip active" onclick="filterTxn(this,'all')">All</div>
+    <div class="filter-chip" onclick="filterTxn(this,'win')">🏆 Winnings</div>
+    <div class="filter-chip" onclick="filterTxn(this,'add')">💰 Added</div>
+    <div class="filter-chip" onclick="filterTxn(this,'fee')">🎴 Entry Fees</div>
+    <div class="filter-chip" onclick="filterTxn(this,'bonus')">🎁 Bonus</div>
+    <div class="filter-chip" onclick="filterTxn(this,'withdraw')">🏦 Withdrawals</div>
+  </div>
+
+  <!-- Summary Strip -->
+  <div class="summary-strip">
+    <div class="sum-box">
+      <div class="sum-label">Total Won</div>
+      <div class="sum-val green">+₹8,400</div>
+    </div>
+    <div class="sum-box">
+      <div class="sum-label">Total Spent</div>
+      <div class="sum-val red">-₹3,150</div>
+    </div>
+    <div class="sum-box">
+      <div class="sum-label">Net P&L</div>
+      <div class="sum-val gold">+₹5,250</div>
+    </div>
+  </div>
+
+  <!-- Scroll body -->
+  <div class="page-scroll" id="txnList">
+
+    <!-- Today -->
+    <div class="date-group">
+      <div class="date-label">Today — 12 Apr 2026</div>
+
+      <div class="txn-card" data-type="win">
+        <div class="txn-row">
+          <div class="txn-ico win">🏆</div>
+          <div class="txn-info">
+            <div class="txn-name">Blazing Joker Cup — Tournament Win</div>
+            <div class="txn-meta">
+              <span>Rank #23 of 487</span>
+              <span>2:30 PM</span>
+            </div>
+          </div>
+          <div class="txn-right">
+            <div class="txn-amt green">+₹1,200</div>
+            <div class="txn-status done">Credited</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="txn-card" data-type="fee">
+        <div class="txn-row">
+          <div class="txn-ico fee">🎴</div>
+          <div class="txn-info">
+            <div class="txn-name">Golden Ace Tournament — Entry Fee</div>
+            <div class="txn-meta">
+              <span>Points Format</span>
+              <span>11:00 AM</span>
+            </div>
+          </div>
+          <div class="txn-right">
+            <div class="txn-amt red">-₹199</div>
+            <div class="txn-status done">Debited</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="txn-card" data-type="win">
+        <div class="txn-row">
+          <div class="txn-ico win">♠</div>
+          <div class="txn-info">
+            <div class="txn-name">Cash Game — Points Rummy Win</div>
+            <div class="txn-meta">
+              <span>6 Players • ₹0.10/pt</span>
+              <span>9:15 AM</span>
+            </div>
+          </div>
+          <div class="txn-right">
+            <div class="txn-amt green">+₹480</div>
+            <div class="txn-status done">Credited</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Yesterday -->
+    <div class="date-group">
+      <div class="date-label">Yesterday — 11 Apr 2026</div>
+
+      <div class="txn-card" data-type="add">
+        <div class="txn-row">
+          <div class="txn-ico add">💰</div>
+          <div class="txn-info">
+            <div class="txn-name">Wallet Recharge — UPI</div>
+            <div class="txn-meta">
+              <span>UPI ID: rahul@ybl</span>
+              <span>6:15 PM</span>
+            </div>
+          </div>
+          <div class="txn-right">
+            <div class="txn-amt green">+₹500</div>
+            <div class="txn-status done">Success</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="txn-card" data-type="win">
+        <div class="txn-row">
+          <div class="txn-ico win">🏆</div>
+          <div class="txn-info">
+            <div class="txn-name">Pool Rummy 101 — Win</div>
+            <div class="txn-meta">
+              <span>2 Players • ₹50 entry</span>
+              <span>4:40 PM</span>
+            </div>
+          </div>
+          <div class="txn-right">
+            <div class="txn-amt green">+₹92</div>
+            <div class="txn-status done">Credited</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="txn-card" data-type="fee">
+        <div class="txn-row">
+          <div class="txn-ico fee">🎴</div>
+          <div class="txn-info">
+            <div class="txn-name">Royal Championship — Entry Fee</div>
+            <div class="txn-meta">
+              <span>Mega Event</span>
+              <span>3:00 PM</span>
+            </div>
+          </div>
+          <div class="txn-right">
+            <div class="txn-amt red">-₹199</div>
+            <div class="txn-status done">Debited</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="txn-card" data-type="bonus">
+        <div class="txn-row">
+          <div class="txn-ico bonus">🎁</div>
+          <div class="txn-info">
+            <div class="txn-name">Referral Bonus — Friend Joined</div>
+            <div class="txn-meta">
+              <span>Refer & Earn</span>
+              <span>1:00 PM</span>
+            </div>
+          </div>
+          <div class="txn-right">
+            <div class="txn-amt green">+₹200</div>
+            <div class="txn-status done">Bonus Credited</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 10 Apr -->
+    <div class="date-group">
+      <div class="date-label">10 Apr 2026</div>
+
+      <div class="txn-card" data-type="withdraw">
+        <div class="txn-row">
+          <div class="txn-ico add">🏦</div>
+          <div class="txn-info">
+            <div class="txn-name">Withdrawal to Bank Account</div>
+            <div class="txn-meta">
+              <span>SBI •••• 4521</span>
+              <span>5:30 PM</span>
+            </div>
+          </div>
+          <div class="txn-right">
+            <div class="txn-amt red">-₹1,000</div>
+            <div class="txn-status done">Processed</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="txn-card" data-type="win">
+        <div class="txn-row">
+          <div class="txn-ico win">🏆</div>
+          <div class="txn-info">
+            <div class="txn-name">Deals Rummy — 6 Deals Win</div>
+            <div class="txn-meta">
+              <span>6 Players • ₹100 entry</span>
+              <span>2:10 PM</span>
+            </div>
+          </div>
+          <div class="txn-right">
+            <div class="txn-amt green">+₹560</div>
+            <div class="txn-status done">Credited</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="txn-card" data-type="add">
+        <div class="txn-row">
+          <div class="txn-ico add">💰</div>
+          <div class="txn-info">
+            <div class="txn-name">Wallet Recharge — Debit Card</div>
+            <div class="txn-meta">
+              <span>HDFC •••• 7832</span>
+              <span>10:00 AM</span>
+            </div>
+          </div>
+          <div class="txn-right">
+            <div class="txn-amt green">+₹1,000</div>
+            <div class="txn-status pending">Processing…</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="txn-card" data-type="bonus">
+        <div class="txn-row">
+          <div class="txn-ico bonus">🌟</div>
+          <div class="txn-info">
+            <div class="txn-name">Daily Login Bonus</div>
+            <div class="txn-meta">
+              <span>Day 7 Streak</span>
+              <span>8:05 AM</span>
+            </div>
+          </div>
+          <div class="txn-right">
+            <div class="txn-amt green">+₹50</div>
+            <div class="txn-status done">Bonus Credited</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 8 Apr -->
+    <div class="date-group">
+      <div class="date-label">8 Apr 2026</div>
+      <div class="txn-card" data-type="fee">
+        <div class="txn-row">
+          <div class="txn-ico loss">🎴</div>
+          <div class="txn-info">
+            <div class="txn-name">Points Rummy — Entry Fee</div>
+            <div class="txn-meta">
+              <span>6 Players • ₹0.50/pt</span>
+              <span>8:30 PM</span>
+            </div>
+          </div>
+          <div class="txn-right">
+            <div class="txn-amt red">-₹40</div>
+            <div class="txn-status done">Debited</div>
+          </div>
+        </div>
+      </div>
+      <div class="txn-card" data-type="win">
+        <div class="txn-row">
+          <div class="txn-ico win">🏆</div>
+          <div class="txn-info">
+            <div class="txn-name">Ramble King — Points Win</div>
+            <div class="txn-meta">
+              <span>Challenger Series</span>
+              <span>7:00 PM</span>
+            </div>
+          </div>
+          <div class="txn-right">
+            <div class="txn-amt green">+₹3,800</div>
+            <div class="txn-status done">Credited</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- page-scroll -->
+</div>
+
+<!-- Bottom Nav -->
+<nav class="bottom-nav">
+  <div class="nav-item" onclick="window.location.href='home.html'">
+    <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg></div>
+    <div class="nav-label">Home</div>
+  </div>
+  <div class="nav-item" onclick="window.location.href='wallet.html'">
+    <div class="nav-icon"><svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M16 12a1 1 0 1 0 2 0 1 1 0 0 0-2 0"/><path d="M2 10h20"/></svg></div>
+    <div class="nav-label">Wallet</div>
+  </div>
+  <div class="nav-item nav-lobby" onclick="window.location.href='game_lobby.html'">
+    <div class="nav-icon"><svg viewBox="0 0 100 100" width="26" height="26"><path d="M50 5 C50 5 10 35 10 58 C10 72 20 80 34 76 C30 84 26 90 20 93 L80 93 C74 90 70 84 66 76 C80 80 90 72 90 58 C90 35 50 5 50 5Z" fill="#ffffff"/></svg></div>
+    <div class="nav-label">Game Lobby</div>
+  </div>
+  <div class="nav-item active">
+    <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+    <div class="nav-label">Friends</div>
+  </div>
+  <div class="nav-item" onclick="window.location.href='leaderboard.html'">
+    <div class="nav-icon"><svg viewBox="0 0 24 24"><rect x="2" y="14" width="4" height="7" rx="1"/><rect x="9" y="9" width="4" height="12" rx="1"/><rect x="16" y="4" width="4" height="17" rx="1"/></svg></div>
+    <div class="nav-label">Leaderboard</div>
+  </div>
+</nav>
+
+<div class="toast" id="toast"></div>
+
+<script>
+let toastT;
+function toast(msg, type='') {
+  const el = document.getElementById('toast');
+  el.textContent = msg; el.className = 'toast show ' + type;
+  clearTimeout(toastT);
+  toastT = setTimeout(() => el.classList.remove('show'), 2500);
+}
+
+function filterTxn(chip, type) {
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  chip.classList.add('active');
+  document.querySelectorAll('.txn-card').forEach(card => {
+    if (type === 'all' || card.dataset.type === type) {
+      card.style.display = '';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+  // Hide empty date groups
+  document.querySelectorAll('.date-group').forEach(g => {
+    const visible = [...g.querySelectorAll('.txn-card')].some(c => c.style.display !== 'none');
+    g.style.display = visible ? '' : 'none';
+  });
+}
+</script>
+</body>
+</html>

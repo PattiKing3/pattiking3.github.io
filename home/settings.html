@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Patti King — Settings</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/pages.css">
+<style>
+.danger-zone {
+  margin-top: 8px;
+}
+.danger-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 16px; cursor: pointer;
+  border-bottom: 1px solid rgba(224,96,96,0.1);
+  transition: background 0.15s; border-radius: 0;
+}
+.danger-row:first-child { border-radius: 16px 16px 0 0; }
+.danger-row:last-child  { border-bottom: none; border-radius: 0 0 16px 16px; }
+.danger-row:hover { background: rgba(224,96,96,0.06); }
+.danger-row .row-title { color: #c04040; }
+.danger-row .row-sub   { color: #a06060; }
+.danger-row .row-icon  { background: rgba(224,96,96,0.12); border-color: rgba(224,96,96,0.25); }
+
+/* Language selector */
+.lang-row {
+  display: flex; gap: 8px; flex-wrap: wrap;
+  padding: 10px 16px 14px;
+}
+.lang-btn {
+  padding: 7px 16px; border-radius: 50px;
+  font-size: 12px; font-weight: 700;
+  border: 1.5px solid rgba(201,168,76,0.3);
+  color: #7a5a20; background: rgba(201,168,76,0.08);
+  cursor: pointer; transition: 0.18s;
+}
+.lang-btn.active {
+  background: linear-gradient(135deg, #c9a84c, #a87c30);
+  border-color: #a87c30; color: #0b1a0e;
+}
+
+/* Version info */
+.version-info {
+  text-align: center; padding: 24px 0 8px;
+  font-size: 11px; color: rgba(240,232,213,0.3);
+  line-height: 1.8;
+}
+.version-info strong { color: var(--gold); opacity: 0.6; }
+</style>
+</head>
+<body>
+<div class="bg"></div>
+
+<div class="page-wrap">
+
+  <div class="page-header">
+    <div class="page-back" onclick="history.back()">&#8592;</div>
+    <div class="page-title">Settings</div>
+    <div class="page-icon">⚙️</div>
+  </div>
+
+  <div class="page-scroll">
+
+    <!-- Notifications -->
+    <div class="sec-card">
+      <div class="sec-label">Notifications</div>
+      <div class="toggle-row">
+        <div class="toggle-info">
+          <div class="row-title">Push Notifications</div>
+          <div class="row-sub">Tournament alerts, offers & updates</div>
+        </div>
+        <div class="toggle on" onclick="toggleSwitch(this)" data-key="push">
+          <div class="toggle-knob"></div>
+        </div>
+      </div>
+      <div class="toggle-row">
+        <div class="toggle-info">
+          <div class="row-title">Tournament Reminders</div>
+          <div class="row-sub">15 mins before tournament starts</div>
+        </div>
+        <div class="toggle on" onclick="toggleSwitch(this)" data-key="tourn_remind">
+          <div class="toggle-knob"></div>
+        </div>
+      </div>
+      <div class="toggle-row">
+        <div class="toggle-info">
+          <div class="row-title">Promotional Offers</div>
+          <div class="row-sub">Bonus, cashback & flash deals</div>
+        </div>
+        <div class="toggle" onclick="toggleSwitch(this)" data-key="promo">
+          <div class="toggle-knob"></div>
+        </div>
+      </div>
+      <div class="toggle-row">
+        <div class="toggle-info">
+          <div class="row-title">Win / Loss Alerts</div>
+          <div class="row-sub">Get notified after each game</div>
+        </div>
+        <div class="toggle on" onclick="toggleSwitch(this)" data-key="win_alert">
+          <div class="toggle-knob"></div>
+        </div>
+      </div>
+      <div class="toggle-row">
+        <div class="toggle-info">
+          <div class="row-title">SMS Notifications</div>
+          <div class="row-sub">OTP and transaction messages</div>
+        </div>
+        <div class="toggle on" onclick="toggleSwitch(this)" data-key="sms">
+          <div class="toggle-knob"></div>
+        </div>
+      </div>
+      <div class="toggle-row">
+        <div class="toggle-info">
+          <div class="row-title">Email Notifications</div>
+          <div class="row-sub">Weekly summary & statements</div>
+        </div>
+        <div class="toggle" onclick="toggleSwitch(this)" data-key="email">
+          <div class="toggle-knob"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sound & Visuals -->
+    <div class="sec-card">
+      <div class="sec-label">Sound & Visuals</div>
+      <div class="toggle-row">
+        <div class="toggle-info">
+          <div class="row-title">Sound Effects</div>
+          <div class="row-sub">Card shuffle, win, & button sounds</div>
+        </div>
+        <div class="toggle on" onclick="toggleSwitch(this)" data-key="sound">
+          <div class="toggle-knob"></div>
+        </div>
+      </div>
+      <div class="toggle-row">
+        <div class="toggle-info">
+          <div class="row-title">Background Music</div>
+          <div class="row-sub">Ambient casino music during games</div>
+        </div>
+        <div class="toggle" onclick="toggleSwitch(this)" data-key="music">
+          <div class="toggle-knob"></div>
+        </div>
+      </div>
+      <div class="toggle-row">
+        <div class="toggle-info">
+          <div class="row-title">Vibration / Haptic</div>
+          <div class="row-sub">Vibrate on turns and wins</div>
+        </div>
+        <div class="toggle on" onclick="toggleSwitch(this)" data-key="haptic">
+          <div class="toggle-knob"></div>
+        </div>
+      </div>
+      <div class="toggle-row">
+        <div class="toggle-info">
+          <div class="row-title">Animations</div>
+          <div class="row-sub">Card deal & win animations</div>
+        </div>
+        <div class="toggle on" onclick="toggleSwitch(this)" data-key="anim">
+          <div class="toggle-knob"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Game Preferences -->
+    <div class="sec-card">
+      <div class="sec-label">Game Preferences</div>
+      <div class="toggle-row">
+        <div class="toggle-info">
+          <div class="row-title">Auto Sort Cards</div>
+          <div class="row-sub">Automatically sort hand on deal</div>
+        </div>
+        <div class="toggle on" onclick="toggleSwitch(this)" data-key="auto_sort">
+          <div class="toggle-knob"></div>
+        </div>
+      </div>
+      <div class="toggle-row">
+        <div class="toggle-info">
+          <div class="row-title">Show Opponent Timer</div>
+          <div class="row-sub">See time left for opponents</div>
+        </div>
+        <div class="toggle on" onclick="toggleSwitch(this)" data-key="opp_timer">
+          <div class="toggle-knob"></div>
+        </div>
+      </div>
+      <div class="toggle-row">
+        <div class="toggle-info">
+          <div class="row-title">Quick Join</div>
+          <div class="row-sub">Skip confirmation before joining tables</div>
+        </div>
+        <div class="toggle" onclick="toggleSwitch(this)" data-key="quick_join">
+          <div class="toggle-knob"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Language -->
+    <div class="sec-card">
+      <div class="sec-label">Language</div>
+      <div class="lang-row">
+        <div class="lang-btn active" onclick="selectLang(this)">🇮🇳 English</div>
+        <div class="lang-btn" onclick="selectLang(this)">🇮🇳 मराठी</div>
+        <div class="lang-btn" onclick="selectLang(this)">🇮🇳 हिंदी</div>
+        <div class="lang-btn" onclick="selectLang(this)">🇮🇳 தமிழ்</div>
+        <div class="lang-btn" onclick="selectLang(this)">🇮🇳 తెలుగు</div>
+      </div>
+    </div>
+
+    <!-- Privacy & Security -->
+    <div class="sec-card">
+      <div class="sec-label">Privacy & Security</div>
+      <div class="list-row" onclick="toast('Change Password page coming soon!','')">
+        <div class="row-icon">🔒</div>
+        <div class="row-body">
+          <div class="row-title">Change Password</div>
+          <div class="row-sub">Update your login password</div>
+        </div>
+        <div class="row-right"><div class="row-arrow">›</div></div>
+      </div>
+      <div class="list-row" onclick="toast('Biometric setup coming soon!','')">
+        <div class="row-icon">👆</div>
+        <div class="row-body">
+          <div class="row-title">Biometric Login</div>
+          <div class="row-sub">Use fingerprint or Face ID</div>
+        </div>
+        <div class="row-right">
+          <div class="toggle" onclick="event.stopPropagation(); toggleSwitch(this)" data-key="biometric">
+            <div class="toggle-knob"></div>
+          </div>
+        </div>
+      </div>
+      <div class="list-row" onclick="toast('Privacy Policy opening...','')">
+        <div class="row-icon">📄</div>
+        <div class="row-body">
+          <div class="row-title">Privacy Policy</div>
+          <div class="row-sub">How we handle your data</div>
+        </div>
+        <div class="row-right"><div class="row-arrow">›</div></div>
+      </div>
+      <div class="list-row" onclick="toast('Terms of Service opening...','')">
+        <div class="row-icon">📋</div>
+        <div class="row-body">
+          <div class="row-title">Terms of Service</div>
+          <div class="row-sub">Rules and conditions of use</div>
+        </div>
+        <div class="row-right"><div class="row-arrow">›</div></div>
+      </div>
+      <div class="toggle-row">
+        <div class="toggle-info">
+          <div class="row-title">Two-Factor Authentication</div>
+          <div class="row-sub">Extra security on login</div>
+        </div>
+        <div class="toggle on" onclick="toggleSwitch(this)" data-key="2fa">
+          <div class="toggle-knob"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Danger Zone -->
+    <div class="sec-label" style="padding: 14px 0 8px; color: #e06060; font-size: 10px; font-weight: 800; letter-spacing: 0.6px; text-transform: uppercase;">⚠ Danger Zone</div>
+    <div class="sec-card danger-zone">
+      <div class="danger-row list-row" onclick="confirmLogout()">
+        <div class="row-icon red">🚪</div>
+        <div class="row-body">
+          <div class="row-title" style="color:#c04040;">Logout</div>
+          <div class="row-sub" style="color:#a06060;">Sign out of your account</div>
+        </div>
+        <div class="row-right"><div class="row-arrow" style="color:#e06060;">›</div></div>
+      </div>
+      <div class="danger-row list-row" onclick="toast('Account deactivation — Contact support.','error')">
+        <div class="row-icon red">😴</div>
+        <div class="row-body">
+          <div class="row-title" style="color:#c04040;">Deactivate Account</div>
+          <div class="row-sub" style="color:#a06060;">Temporarily disable your account</div>
+        </div>
+        <div class="row-right"><div class="row-arrow" style="color:#e06060;">›</div></div>
+      </div>
+      <div class="danger-row list-row" onclick="toast('Account deletion — Contact support.','error')">
+        <div class="row-icon red">🗑️</div>
+        <div class="row-body">
+          <div class="row-title" style="color:#c04040;">Delete Account</div>
+          <div class="row-sub" style="color:#a06060;">Permanently remove your account & data</div>
+        </div>
+        <div class="row-right"><div class="row-arrow" style="color:#e06060;">›</div></div>
+      </div>
+    </div>
+
+    <!-- Version -->
+    <div class="version-info">
+      <strong>Patti King</strong><br>
+      Version 2.4.1 (Build 241)<br>
+      © 2026 Patti King. All rights reserved.
+    </div>
+
+  </div>
+</div>
+
+<!-- Bottom Nav -->
+<nav class="bottom-nav">
+  <div class="nav-item" onclick="window.location.href='home.html'">
+    <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg></div>
+    <div class="nav-label">Home</div>
+  </div>
+  <div class="nav-item" onclick="window.location.href='wallet.html'">
+    <div class="nav-icon"><svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M16 12a1 1 0 1 0 2 0 1 1 0 0 0-2 0"/><path d="M2 10h20"/></svg></div>
+    <div class="nav-label">Wallet</div>
+  </div>
+  <div class="nav-item nav-lobby" onclick="window.location.href='game_lobby.html'">
+    <div class="nav-icon"><svg viewBox="0 0 100 100" width="26" height="26"><path d="M50 5 C50 5 10 35 10 58 C10 72 20 80 34 76 C30 84 26 90 20 93 L80 93 C74 90 70 84 66 76 C80 80 90 72 90 58 C90 35 50 5 50 5Z" fill="#ffffff"/></svg></div>
+    <div class="nav-label">Game Lobby</div>
+  </div>
+  <div class="nav-item active">
+    <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+    <div class="nav-label">Friends</div>
+  </div>
+  <div class="nav-item">
+    <div class="nav-icon"><svg viewBox="0 0 24 24"><rect x="2" y="14" width="4" height="7" rx="1"/><rect x="9" y="9" width="4" height="12" rx="1"/><rect x="16" y="4" width="4" height="17" rx="1"/></svg></div>
+    <div class="nav-label">Leaderboard</div>
+  </div>
+</nav>
+
+<div class="toast" id="toast"></div>
+<script>
+let toastT;
+function toast(msg, type='') {
+  const el = document.getElementById('toast');
+  el.textContent = msg; el.className = 'toast show ' + type;
+  clearTimeout(toastT); toastT = setTimeout(() => el.classList.remove('show'), 2500);
+}
+function toggleSwitch(el) {
+  el.classList.toggle('on');
+  const state = el.classList.contains('on') ? 'ON' : 'OFF';
+  const key = el.dataset.key || 'setting';
+  toast(key.replace(/_/g,' ').replace(/\b\w/g,c=>c.toUpperCase()) + ': ' + state, state==='ON'?'success':'');
+}
+function selectLang(btn) {
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  toast('Language changed to ' + btn.textContent.trim(), 'success');
+}
+function confirmLogout() {
+  if (confirm('Are you sure you want to logout?')) {
+    toast('Logging out...', '');
+    setTimeout(() => { window.location.href = '../index.html'; }, 800);
+  }
+}
+</script>
+</body>
+</html>
