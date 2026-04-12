@@ -129,6 +129,7 @@ function doManualAddFund() {
   const inp = document.getElementById('manualFundInput');
   const val = parseFloat(inp?.value);
   if (!val || val < 25) { toast('Please enter minimum ₹25 amount!', 'error'); return; }
+  createTransaction(val, 'credit', 'deposit', 'success', 'Manual Fund Added');
   toast('Adding ₹' + val.toLocaleString('en-IN') + ' to your wallet...', 'success');
   if (inp) inp.value = '';
 }
@@ -209,3 +210,8 @@ function syncWalletUI() {
 document.addEventListener('DOMContentLoaded', syncWalletUI);
 window.buyCoins = buyCoins;
 window.doWithdraw = doWithdraw;
+window.openCoins = openCoins;
+window.closeCoins = closeCoins;
+window.switchWalletTab = switchWalletTab;
+window.doManualAddFund = doManualAddFund;
+window.claimBonus = claimBonus;
