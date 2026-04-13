@@ -80,6 +80,17 @@
   display: flex; align-items: center; justify-content: center; color: #333;
 }
 .coins-bal-label { font-size: 13px; font-weight: 600; color: #222; }
+/* Balance Card — ADD CASH button */
+.bal-add-cash-btn {
+  background: #1a9e4a; color: #fff;
+  font-family: 'Source Sans 3', Arial, sans-serif;
+  font-size: 13px; font-weight: 800;
+  border: none; border-radius: 6px;
+  padding: 9px 20px; cursor: pointer;
+  letter-spacing: 0.4px; text-transform: uppercase;
+  white-space: nowrap; flex-shrink: 0;
+  transition: opacity 0.2s, transform 0.15s;
+}
 .add-cash-btn {
   background: #1a9e4a; color: #fff;
   font-family: 'Source Sans 3', Arial, sans-serif;
@@ -310,17 +321,6 @@
 .manual-cash-input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
 .manual-cash-hint { font-size: 10px; color: #999; margin-bottom: 12px; padding-left: 2px; }
 .manual-cash-hint.error { color: #e05555; }
-/* Balance Card — ADD CASH button */
-.bal-add-cash-btn {
-  background: #1a9e4a; color: #fff;
-  font-family: 'Source Sans 3', Arial, sans-serif;
-  font-size: 13px; font-weight: 800;
-  border: none; border-radius: 6px;
-  padding: 9px 20px; cursor: pointer;
-  letter-spacing: 0.4px; text-transform: uppercase;
-  white-space: nowrap; flex-shrink: 0;
-  transition: opacity 0.2s, transform 0.15s;
-}
 .bal-add-cash-btn:hover  { opacity: 0.88; }
 .bal-add-cash-btn:active { transform: scale(0.97); }
 .add-cash-btn {
