@@ -290,55 +290,55 @@
         </div>
       </div>
 
-      <!-- ── ADD FUND ── -->
-      <div class="add-fund-card">
-        <div class="add-fund-card-title">&#9824; Add Fund</div>
+      <!-- ── ADD CASH ── -->
+      <div class="add-cash-card">
+        <div class="add-cash-card-title">&#9824; Add Cash</div>
         <div class="coins-pack-grid">
           <div class="coins-pack" onclick="buyCoins(50,50)">
             <div class="pack-coins">&#8377;50</div>
-            <div class="pack-label">Fund</div>
+            <div class="pack-label">Cash</div>
             <div class="pack-price">&#8377;50</div>
           </div>
           <div class="coins-pack" onclick="buyCoins(100,100)">
             <div class="pack-coins">&#8377;100</div>
-            <div class="pack-label">Fund</div>
+            <div class="pack-label">Cash</div>
             <div class="pack-price">&#8377;100</div>
           </div>
           <div class="coins-pack popular" onclick="buyCoins(200,200)">
             <div class="pack-tag">POPULAR</div>
             <div class="pack-coins">&#8377;200</div>
-            <div class="pack-label">Fund</div>
+            <div class="pack-label">Cash</div>
             <div class="pack-price">&#8377;200</div>
           </div>
           <div class="coins-pack" onclick="buyCoins(500,500)">
             <div class="pack-coins">&#8377;500</div>
-            <div class="pack-label">Fund</div>
+            <div class="pack-label">Cash</div>
             <div class="pack-price">&#8377;500</div>
           </div>
           <div class="coins-pack best" onclick="buyCoins(1000,1000)">
             <div class="pack-tag">BEST VALUE</div>
             <div class="pack-coins">&#8377;1,000</div>
-            <div class="pack-label">Fund</div>
+            <div class="pack-label">Cash</div>
             <div class="pack-price">&#8377;1,000</div>
           </div>
           <div class="coins-pack" onclick="buyCoins(2000,2000)">
             <div class="pack-coins">&#8377;2,000</div>
-            <div class="pack-label">Fund</div>
+            <div class="pack-label">Cash</div>
             <div class="pack-price">&#8377;2,000</div>
           </div>
         </div>
 
         <!-- Manual amount -->
-        <div class="manual-fund-wrap">
-          <div class="manual-fund-label">Or Enter Amount Manually</div>
-          <div class="manual-fund-input-row">
-            <span class="manual-fund-rupee">&#8377;</span>
-            <input class="manual-fund-input" type="number"
-                   id="manualFundInput" placeholder="Min. &#8377;25" min="25"
-                   oninput="validateManualFund(this)"/>
+        <div class="manual-cash-wrap">
+          <div class="manual-cash-label">Or Enter Amount Manually</div>
+          <div class="manual-cash-input-row">
+            <span class="manual-cash-rupee">&#8377;</span>
+            <input class="manual-cash-input" type="number"
+                   id="manualcashInput" placeholder="Min. &#8377;25" min="25"
+                   oninput="validateManualcash(this)"/>
           </div>
-          <div class="manual-fund-hint" id="manualFundHint">Minimum amount: &#8377;25</div>
-          <button class="add-fund-btn" onclick="doManualAddFund()">&#43; ADD FUND</button>
+          <div class="manual-cash-hint" id="manualcaahHint">Minimum amount: &#8377;25</div>
+          <button class="add-cash-btn" onclick="doManualAddFund()">&#43; ADD CASH</button>
         </div>
       </div>
 
@@ -528,7 +528,7 @@ function toast(msg, type) {
 }
 
 function openAddCash() {
-  document.querySelector('.add-fund-card').scrollIntoView({ behavior: 'smooth' });
+  document.querySelector('.add-cash-card').scrollIntoView({ behavior: 'smooth' });
 }
 
 function showInfo(type) {
@@ -602,8 +602,8 @@ function validateManualFund(inp) {
   }
 }
 
-function doManualAddFund() {
-  const val = parseInt(document.getElementById('manualFundInput').value);
+function doManualAddCash() {
+  const val = parseInt(document.getElementById('manualcashInput').value);
   if (!val || val < 25) { toast('Minimum amount is ₹25', 'error'); return; }
   toast('Processing ₹' + val + ' payment...', '');
   setTimeout(() => {
