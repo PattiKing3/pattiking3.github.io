@@ -62,7 +62,7 @@
 .bonus-panel-wrap,
 .dreamcoins-row,
 .wallet-menu-list,
-.add-fund-card,
+.add-cash-card,
 .offers-card,
 .txn-card {
   background: #ffffff;
@@ -267,8 +267,8 @@
 .coins-section-label span { color: var(--gold2, #c9a84c); }
 
 /* ── ADD FUND CARD ── */
-.add-fund-card { padding: 16px 18px; }
-.add-fund-card-title { font-size: 14px; font-weight: 700; color: #111; margin-bottom: 14px; }
+.add-cash-card { padding: 16px 18px; }
+.add-cash-card-title { font-size: 14px; font-weight: 700; color: #111; margin-bottom: 14px; }
 .coins-pack-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 14px; }
 .coins-pack {
   background: #f8f8f8; border: 1.5px solid #e8e8e8;
@@ -292,32 +292,32 @@
 .coins-pack.popular .pack-price { background: #1a9e4a; }
 .coins-pack.best .pack-price    { background: #2196F3; }
 
-.manual-fund-wrap { background: #f8f8f8; border: 1px solid #e8e8e8; border-radius: 10px; padding: 14px 14px 12px; }
-.manual-fund-label { font-size: 11px; font-weight: 700; letter-spacing: 0.4px; text-transform: uppercase; color: #888; margin-bottom: 10px; }
-.manual-fund-input-row {
+.manual-cash-wrap { background: #f8f8f8; border: 1px solid #e8e8e8; border-radius: 10px; padding: 14px 14px 12px; }
+.manual-cash-label { font-size: 11px; font-weight: 700; letter-spacing: 0.4px; text-transform: uppercase; color: #888; margin-bottom: 10px; }
+.manual-cash-input-row {
   display: flex; align-items: center; background: #fff; border: 1.5px solid #ddd;
   border-radius: 8px; overflow: hidden; margin-bottom: 6px; transition: border-color 0.2s;
 }
-.manual-fund-input-row:focus-within { border-color: #1a9e4a; }
-.manual-fund-rupee { padding: 0 8px 0 12px; font-size: 17px; font-weight: 700; color: #444; flex-shrink: 0; }
-.manual-fund-input {
+.manual-cash-input-row:focus-within { border-color: #1a9e4a; }
+.manual-cash-rupee { padding: 0 8px 0 12px; font-size: 17px; font-weight: 700; color: #444; flex-shrink: 0; }
+.manual-cash-input {
   flex: 1; background: transparent; border: none; outline: none;
   font-family: 'Source Sans 3', Arial, sans-serif;
   font-size: 15px; font-weight: 700; color: #111; padding: 12px 12px 12px 0;
 }
-.manual-fund-input::placeholder { color: #bbb; }
-.manual-fund-input::-webkit-inner-spin-button,
-.manual-fund-input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
-.manual-fund-hint { font-size: 10px; color: #999; margin-bottom: 12px; padding-left: 2px; }
-.manual-fund-hint.error { color: #e05555; }
-.add-fund-btn {
+.manual-cash-input::placeholder { color: #bbb; }
+.manual-cash-input::-webkit-inner-spin-button,
+.manual-cash-input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+.manual-cash-hint { font-size: 10px; color: #999; margin-bottom: 12px; padding-left: 2px; }
+.manual-cash-hint.error { color: #e05555; }
+.add-cash-btn {
   width: 100%; padding: 13px; background: #111; border: none; border-radius: 8px; color: #fff;
   font-family: 'Source Sans 3', Arial, sans-serif;
   font-size: 13px; font-weight: 800; letter-spacing: 0.5px; text-transform: uppercase;
   cursor: pointer; transition: transform 0.18s, opacity 0.2s;
 }
-.add-fund-btn:hover  { opacity: 0.85; }
-.add-fund-btn:active { transform: scale(0.98); }
+.add-cash-btn:hover  { opacity: 0.85; }
+.add-cash-btn:active { transform: scale(0.98); }
 
 /* ── OFFERS CARD ── */
 .offers-card { padding: 16px 18px; }
