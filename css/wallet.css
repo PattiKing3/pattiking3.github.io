@@ -1,0 +1,628 @@
+/* ═══════════════════════════════════════════════════════════
+   wallet.css  —  Patti King
+   Wallet page — Dream11-inspired layout on dark background
+   ═══════════════════════════════════════════════════════════ */
+
+/* ─────────────────────────────────────────
+   FULL-SCREEN OVERLAY
+   ───────────────────────────────────────── */
+.coins-overlay {
+  position: fixed; inset: 0; z-index: 200;
+  display: flex; flex-direction: column;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, #8b2035 0%, transparent 65%),
+    radial-gradient(ellipse 60% 40% at 20% 100%, #6e1828 0%, transparent 60%),
+    linear-gradient(175deg, #3d1018 0%, #521828 50%, #2e0c14 100%);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(100%);
+  transition: opacity 0.28s ease, transform 0.28s cubic-bezier(0.22,1,0.36,1);
+  will-change: transform, opacity;
+  bottom: 0 !important;
+}
+.coins-overlay::before { content: none; }
+.coins-overlay.show {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateX(0);
+}
+
+/* ─────────────────────────────────────────
+   PAGE WRAPPER
+   ───────────────────────────────────────── */
+.coins-page {
+  position: relative; z-index: 1;
+  flex: 1; display: flex; flex-direction: column;
+  overflow: hidden;
+}
+
+/* ─────────────────────────────────────────
+   HEADER BAR
+   ───────────────────────────────────────── */
+.coins-header {
+  flex-shrink: 0;
+  padding: 14px 18px 12px;
+  display: flex; align-items: center; gap: 12px;
+  background: rgba(20, 4, 10, 0.6);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.coins-back {
+  width: 36px; height: 36px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; color: var(--text); cursor: pointer;
+  transition: background 0.2s;
+}
+.coins-back:hover { background: rgba(255,255,255,0.14); }
+.coins-title {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 17px; font-weight: 700; color: #fff;
+  flex: 1;
+}
+.coins-header-help {
+  width: 32px; height: 32px;
+  border: 1.5px solid rgba(255,255,255,0.3);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; color: rgba(255,255,255,0.6); cursor: pointer;
+  font-family: 'Libre Baskerville', serif; font-style: italic; font-weight: 700;
+}
+
+/* ─────────────────────────────────────────
+   SCROLL BODY
+   ───────────────────────────────────────── */
+.coins-scroll {
+  flex: 1; overflow-y: auto; overflow-x: hidden;
+  padding: 0 0 calc(var(--nav-h, 70px) + 20px);
+  -webkit-overflow-scrolling: touch;
+}
+.coins-scroll::-webkit-scrollbar { display: none; }
+
+/* ─────────────────────────────────────────
+   MAIN BALANCE CARD (Dream11-style white card)
+   ───────────────────────────────────────── */
+.coins-balance-card {
+  background: #ffffff;
+  border-radius: 0;
+  padding: 16px 18px 20px;
+  margin-bottom: 8px;
+  position: relative;
+}
+.coins-bal-top-row {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 4px;
+}
+.coins-bal-icon-wrap {
+  display: flex; align-items: center; gap: 10px;
+}
+.coins-bal-icon {
+  width: 36px; height: 36px; border-radius: 8px;
+  background: #f0f0f0;
+  display: flex; align-items: center; justify-content: center;
+  color: #333;
+}
+.coins-bal-label {
+  font-size: 13px; font-weight: 600; color: #222;
+}
+.add-cash-btn {
+  background: #1a9e4a;
+  color: #fff;
+  font-family: 'Source Sans 3', Arial, sans-serif;
+  font-size: 13px; font-weight: 800;
+  border: none; border-radius: 6px;
+  padding: 9px 20px; cursor: pointer;
+  letter-spacing: 0.4px; text-transform: uppercase;
+  transition: opacity 0.2s, transform 0.15s;
+}
+.add-cash-btn:hover  { opacity: 0.88; }
+.add-cash-btn:active { transform: scale(0.97); }
+.coins-bal-amount {
+  font-size: 32px; font-weight: 800; color: #1a9e4a;
+  margin: 4px 0 0 46px;
+  font-family: 'Source Sans 3', Arial, sans-serif;
+}
+
+/* ─────────────────────────────────────────
+   BALANCE BREAKDOWN (white card rows)
+   ───────────────────────────────────────── */
+.balance-breakdown {
+  background: #ffffff;
+  margin-bottom: 8px;
+}
+.balance-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 18px;
+  border-bottom: 1px dashed #e8e8e8;
+  position: relative;
+}
+.balance-row:last-child { border-bottom: none; }
+.balance-row-left {}
+.balance-row-label-wrap {
+  display: flex; align-items: center; gap: 5px;
+  margin-bottom: 4px;
+}
+.balance-row-label {
+  font-size: 14px; font-weight: 600; color: #222;
+}
+.balance-row-info {
+  width: 17px; height: 17px; border-radius: 50%;
+  border: 1.5px solid #aaa;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 10px; color: #777; cursor: pointer;
+  font-style: italic; font-family: 'Libre Baskerville', serif; font-weight: 700;
+}
+.balance-row-val {
+  font-size: 16px; font-weight: 700; color: #111;
+}
+.balance-row-right {
+  display: flex; align-items: center; gap: 10px;
+}
+.withdraw-now-btn {
+  background: transparent;
+  border: 1.5px solid #333;
+  border-radius: 6px;
+  padding: 8px 14px;
+  font-family: 'Source Sans 3', Arial, sans-serif;
+  font-size: 12px; font-weight: 800; color: #111;
+  cursor: pointer; letter-spacing: 0.3px; text-transform: uppercase;
+  transition: background 0.18s;
+}
+.withdraw-now-btn:hover { background: #f0f0f0; }
+.gift-icon-btn {
+  width: 36px; height: 36px; border-radius: 8px;
+  border: 1.5px solid #ddd;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; font-size: 16px;
+  transition: background 0.15s;
+}
+.gift-icon-btn:hover { background: #f5f5f5; }
+.bonus-usable-hint {
+  display: flex; align-items: center; gap: 6px;
+  padding: 12px 18px;
+  background: #f8f8f8;
+  border-top: 1px solid #eeeeee;
+}
+.bonus-usable-icon {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: #e8f8ef;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; flex-shrink: 0;
+}
+.bonus-usable-text {
+  font-size: 12px; color: #555; flex: 1; line-height: 1.4;
+}
+.bonus-usable-arrow {
+  font-size: 16px; color: #999;
+}
+
+/* ─────────────────────────────────────────
+   DREAMCOINS ROW
+   ───────────────────────────────────────── */
+.dreamcoins-row {
+  background: #ffffff;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 15px 18px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.dreamcoins-row:hover { background: #fafafa; }
+.dreamcoins-label {
+  font-size: 15px; font-weight: 700; color: #111;
+}
+.dreamcoins-right {
+  display: flex; align-items: center; gap: 6px;
+}
+.dreamcoins-coin-icon {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: linear-gradient(135deg, #f5a623, #e8870a);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 800; color: #fff;
+}
+.dreamcoins-val {
+  font-size: 15px; font-weight: 700; color: #111;
+}
+.dreamcoins-arrow { font-size: 16px; color: #999; }
+
+/* ─────────────────────────────────────────
+   MENU LIST ITEMS (Transactions, Manage, KYC, Invite)
+   ───────────────────────────────────────── */
+.wallet-menu-list {
+  background: #ffffff;
+  margin-bottom: 8px;
+}
+.wallet-menu-item {
+  display: flex; align-items: center; gap: 14px;
+  padding: 15px 18px;
+  border-bottom: 1px solid #f0f0f0;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.wallet-menu-item:last-child { border-bottom: none; }
+.wallet-menu-item:hover { background: #fafafa; }
+.wallet-menu-icon {
+  width: 38px; height: 38px; border-radius: 10px;
+  background: #f4f4f4;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; font-size: 18px;
+}
+.wallet-menu-text { flex: 1; }
+.wallet-menu-title {
+  font-size: 14px; font-weight: 700; color: #111;
+  margin-bottom: 2px;
+}
+.wallet-menu-sub {
+  font-size: 12px; color: #888;
+}
+.wallet-menu-arrow { font-size: 16px; color: #bbb; }
+
+/* ─────────────────────────────────────────
+   WITHDRAW PANEL (expanded)
+   ───────────────────────────────────────── */
+.withdraw-panel {
+  display: none;
+  background: #ffffff;
+  border-top: 1px solid #eee;
+  padding: 16px 18px;
+  margin-bottom: 8px;
+}
+.withdraw-panel.show { display: block; }
+.withdraw-row   { display: flex; gap: 10px; margin-bottom: 14px; }
+.withdraw-info  { flex: 1; }
+.withdraw-info-label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 3px; }
+.withdraw-info-val   { font-size: 16px; font-weight: 700; color: #111; }
+.withdraw-input-wrap {
+  display: flex; align-items: center;
+  background: #f8f8f8;
+  border: 1.5px solid #ddd;
+  border-radius: 8px; overflow: hidden; margin-bottom: 12px;
+  transition: border-color 0.2s;
+}
+.withdraw-input-wrap:focus-within { border-color: #1a9e4a; }
+.withdraw-rupee {
+  padding: 0 10px 0 14px; font-size: 16px; font-weight: 700;
+  color: #333; flex-shrink: 0;
+}
+.withdraw-input {
+  flex: 1; background: transparent; border: none; outline: none;
+  font-size: 15px; font-weight: 600; color: #111;
+  padding: 12px 12px 12px 0;
+  font-family: 'Source Sans 3', Arial, sans-serif;
+}
+.withdraw-input::placeholder { color: #bbb; }
+.withdraw-btn {
+  width: 100%;
+  background: #111;
+  color: #fff; font-size: 13px; font-weight: 800;
+  border: none; border-radius: 8px; padding: 13px;
+  cursor: pointer; letter-spacing: 0.3px; text-transform: uppercase;
+  transition: opacity 0.2s, transform 0.15s;
+}
+.withdraw-btn:hover  { opacity: 0.85; }
+.withdraw-btn:active { transform: scale(0.98); }
+
+/* ─────────────────────────────────────────
+   WALLET TABS  (now hidden — using balance breakdown instead)
+   ───────────────────────────────────────── */
+.wallet-tabs-row { display: none; }
+
+/* ─────────────────────────────────────────
+   BONUS INFO MODAL (bottom sheet)
+   ───────────────────────────────────────── */
+.coins-info-overlay {
+  position: fixed; inset: 0; z-index: 500;
+  background: rgba(0,0,0,0.55);
+  display: none; align-items: flex-end; justify-content: center;
+}
+.coins-info-overlay.show { display: flex; }
+.coins-info-modal {
+  width: 100%; max-width: 420px;
+  background: #fff;
+  border-radius: 20px 20px 0 0;
+  border-top: 2px solid #eee;
+  overflow: hidden;
+  animation: slideUp 0.32s cubic-bezier(0.22,1,0.36,1) both;
+  box-shadow: 0 -8px 40px rgba(0,0,0,0.2);
+}
+@keyframes slideUp {
+  from { transform: translateY(100%); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+.coins-info-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 18px 12px;
+  border-bottom: 1px solid #eee;
+}
+.coins-info-title {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 15px; font-weight: 700; color: #111;
+}
+.coins-info-close {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: #f0f0f0; border: 1px solid #ddd;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; color: #444; cursor: pointer;
+  transition: background 0.2s;
+}
+.coins-info-close:hover { background: #e4e4e4; }
+.coins-info-body { padding: 8px 18px 0; }
+.coins-info-row {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid #f5f5f5;
+}
+.coins-info-row.last { border-bottom: none; }
+.coins-info-icon {
+  width: 34px; height: 34px; border-radius: 10px; flex-shrink: 0;
+  background: #f4f4f4; border: 1px solid #eee;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; color: #444;
+}
+.coins-info-label { font-size: 12px; font-weight: 700; color: #111; margin-bottom: 3px; }
+.coins-info-desc  { font-size: 11px; color: #666; line-height: 1.5; }
+.coins-info-bal-strip {
+  display: flex; align-items: center; justify-content: space-between;
+  margin: 10px 18px 20px;
+  background: #f8f8f8; border: 1px solid #eee;
+  border-radius: 10px; padding: 10px 14px;
+  font-size: 12px; font-weight: 700; color: #444;
+}
+.coins-info-bal-strip span:last-child { font-size: 14px; font-weight: 800; color: #1a9e4a; }
+
+/* ─────────────────────────────────────────
+   BONUS PANEL (Bonus tab — now also white card style)
+   ───────────────────────────────────────── */
+.bonus-panel-wrap {
+  display: none;
+  background: #fff;
+  margin-bottom: 8px;
+  padding: 16px 18px;
+}
+.bonus-panel-wrap.show { display: block; }
+.bonus-reward-list {
+  display: flex; flex-direction: column;
+  background: #fff;
+  border-radius: 10px; overflow: hidden;
+  border: 1px solid #eee;
+}
+.bonus-reward-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 13px 14px;
+  border-bottom: 1px solid #f5f5f5;
+}
+.bonus-reward-item:last-child { border-bottom: none; }
+.bonus-reward-icon  { font-size: 20px; flex-shrink: 0; width: 28px; text-align: center; }
+.bonus-reward-info  { flex: 1; min-width: 0; }
+.bonus-reward-name  { font-size: 13px; font-weight: 700; color: #111; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.bonus-reward-sub   { font-size: 11px; color: #888; margin-top: 1px; }
+.bonus-reward-amt   { font-size: 13px; font-weight: 800; color: #1a9e4a; flex-shrink: 0; white-space: nowrap; }
+.bonus-claim-btn {
+  flex-shrink: 0;
+  background: #111;
+  color: #fff; font-size: 11px; font-weight: 800;
+  border: none; border-radius: 6px; padding: 6px 12px;
+  cursor: pointer; letter-spacing: 0.3px;
+  transition: opacity 0.2s, transform 0.15s;
+}
+.bonus-claim-btn:hover  { opacity: 0.8; transform: scale(1.03); }
+.bonus-claim-btn:active { transform: scale(0.96); }
+.bonus-claim-btn.claimed { background: #eee; color: #999; box-shadow: none; cursor: default; }
+
+/* ─────────────────────────────────────────
+   SECTION TITLES (dark bg — shown between white cards)
+   ───────────────────────────────────────── */
+.coins-section-title {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 18px 10px;
+}
+.coins-section-label {
+  font-size: 14px; font-weight: 700; color: rgba(255,255,255,0.75);
+  letter-spacing: 0.3px; text-transform: uppercase;
+}
+.coins-section-label span { color: var(--gold2, #c9a84c); }
+
+/* ─────────────────────────────────────────
+   ADD FUND — Pack Grid (white card)
+   ───────────────────────────────────────── */
+.add-fund-card {
+  background: #fff;
+  padding: 16px 18px;
+  margin-bottom: 8px;
+}
+.add-fund-card-title {
+  font-size: 14px; font-weight: 700; color: #111;
+  margin-bottom: 14px;
+}
+.coins-pack-grid {
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px; margin-bottom: 14px;
+}
+.coins-pack {
+  background: #f8f8f8;
+  border: 1.5px solid #e8e8e8;
+  border-radius: 10px; padding: 14px 8px 12px;
+  text-align: center; cursor: pointer;
+  position: relative; overflow: hidden;
+  transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+}
+.coins-pack:hover  { transform: translateY(-2px); border-color: #bbb; box-shadow: 0 4px 14px rgba(0,0,0,0.1); }
+.coins-pack:active { transform: scale(0.96); }
+.coins-pack.popular {
+  border-color: #1a9e4a;
+  background: #f0faf4;
+}
+.coins-pack.best {
+  border-color: #2196F3;
+  background: #f0f7ff;
+}
+.pack-tag {
+  position: absolute; top: 0; right: 0;
+  background: #1a9e4a;
+  color: #fff;
+  font-size: 7px; font-weight: 800; letter-spacing: 0.5px;
+  padding: 3px 7px; border-radius: 0 10px 0 7px;
+}
+.coins-pack.best .pack-tag { background: #2196F3; }
+.pack-coins {
+  font-size: 18px; font-weight: 800; color: #111;
+  margin-top: 2px;
+}
+.pack-label { font-size: 10px; color: #888; margin: 2px 0 8px; letter-spacing: 0.2px; }
+.pack-price {
+  display: inline-block;
+  background: #111;
+  color: #fff; font-size: 12px; font-weight: 800;
+  padding: 4px 14px; border-radius: 50px;
+}
+.coins-pack.popular .pack-price { background: #1a9e4a; }
+.coins-pack.best .pack-price    { background: #2196F3; }
+
+/* ─────────────────────────────────────────
+   MANUAL FUND INPUT
+   ───────────────────────────────────────── */
+.manual-fund-wrap {
+  background: #f8f8f8;
+  border: 1px solid #e8e8e8;
+  border-radius: 10px; padding: 14px 14px 12px;
+}
+.manual-fund-label {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.4px;
+  text-transform: uppercase; color: #888; margin-bottom: 10px;
+}
+.manual-fund-input-row {
+  display: flex; align-items: center;
+  background: #fff;
+  border: 1.5px solid #ddd;
+  border-radius: 8px; overflow: hidden; margin-bottom: 6px;
+  transition: border-color 0.2s;
+}
+.manual-fund-input-row:focus-within {
+  border-color: #1a9e4a;
+}
+.manual-fund-rupee {
+  padding: 0 8px 0 12px; font-size: 17px; font-weight: 700;
+  color: #444; flex-shrink: 0;
+}
+.manual-fund-input {
+  flex: 1; background: transparent; border: none; outline: none;
+  font-family: 'Source Sans 3', Arial, sans-serif;
+  font-size: 15px; font-weight: 700; color: #111;
+  padding: 12px 12px 12px 0;
+}
+.manual-fund-input::placeholder { color: #bbb; }
+.manual-fund-input::-webkit-inner-spin-button,
+.manual-fund-input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+.manual-fund-hint { font-size: 10px; color: #999; margin-bottom: 12px; padding-left: 2px; }
+.manual-fund-hint.error { color: #e05555; }
+.add-fund-btn {
+  width: 100%; padding: 13px;
+  background: #111;
+  border: none; border-radius: 8px; color: #fff;
+  font-family: 'Source Sans 3', Arial, sans-serif;
+  font-size: 13px; font-weight: 800; letter-spacing: 0.5px; text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.18s, opacity 0.2s;
+}
+.add-fund-btn:hover  { opacity: 0.85; }
+.add-fund-btn:active { transform: scale(0.98); }
+
+/* ─────────────────────────────────────────
+   OFFERS LIST (white card)
+   ───────────────────────────────────────── */
+.offers-card {
+  background: #fff;
+  padding: 16px 18px;
+  margin-bottom: 8px;
+}
+.offers-card-title {
+  font-size: 14px; font-weight: 700; color: #111;
+  margin-bottom: 14px;
+}
+.offers-list { display: flex; flex-direction: column; gap: 10px; }
+.offer-card {
+  background: #f9f9f9;
+  border: 1px solid #e8e8e8;
+  border-radius: 12px; padding: 14px;
+  display: flex; align-items: flex-start; gap: 12px;
+  position: relative; overflow: hidden;
+}
+.offer-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; bottom: 0; width: 4px;
+  background: #1a9e4a;
+  border-radius: 12px 0 0 12px;
+}
+.offer-card-left { flex: 1; min-width: 0; padding-left: 4px; }
+.offer-badge {
+  display: inline-block;
+  background: #111;
+  color: #fff;
+  font-size: 9px; font-weight: 800; letter-spacing: 0.6px;
+  padding: 3px 9px; border-radius: 50px; margin-bottom: 6px;
+}
+.offer-title { font-size: 13px; font-weight: 700; color: #111; margin-bottom: 4px; }
+.offer-desc  { font-size: 11px; font-weight: 500; color: #666; line-height: 1.45; margin-bottom: 6px; }
+.offer-code-row { display: flex; align-items: center; gap: 5px; font-size: 11px; }
+.offer-code-label { color: #888; font-weight: 600; }
+.offer-code {
+  background: #fff;
+  border: 1px dashed #bbb;
+  color: #444; font-size: 11px; font-weight: 800;
+  padding: 2px 8px; border-radius: 5px; letter-spacing: 0.5px;
+}
+.offer-apply-btn {
+  flex-shrink: 0; align-self: flex-start; margin-top: 2px;
+  padding: 8px 14px;
+  background: #1a9e4a;
+  border: none; border-radius: 8px; color: #fff;
+  font-family: 'Source Sans 3', Arial, sans-serif;
+  font-size: 12px; font-weight: 800; letter-spacing: 0.3px;
+  cursor: pointer;
+  transition: transform 0.15s, opacity 0.15s;
+}
+.offer-apply-btn:hover  { opacity: 0.85; }
+.offer-apply-btn:active { transform: scale(0.95); }
+
+/* ─────────────────────────────────────────
+   TRANSACTION LIST (white card)
+   ───────────────────────────────────────── */
+.txn-card {
+  background: #fff;
+  padding: 0 18px;
+  margin-bottom: 8px;
+}
+.txn-card-title {
+  font-size: 14px; font-weight: 700; color: #111;
+  padding: 16px 0 4px;
+}
+.txn-list { display: flex; flex-direction: column; }
+.txn-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 13px 0;
+  border-bottom: 1px solid #f2f2f2;
+}
+.txn-item:last-child { border-bottom: none; }
+.txn-icon {
+  width: 38px; height: 38px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 700; flex-shrink: 0;
+}
+.txn-icon.win  { background: #e8f8ef; color: #1a9e4a; border: 1px solid #c8ead4; }
+.txn-icon.loss { background: #feeaea; color: #d33;   border: 1px solid #f5c0c0; }
+.txn-icon.add  { background: #fff8e6; color: #c87a10; border: 1px solid #f5dfa0; }
+.txn-info { flex: 1; min-width: 0; }
+.txn-name { font-size: 13px; font-weight: 600; color: #111; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.txn-date { font-size: 10px; color: #aaa; margin-top: 2px; }
+.txn-amt  { font-size: 15px; font-weight: 700; flex-shrink: 0; }
+.txn-amt.green { color: #1a9e4a; }
+.txn-amt.red   { color: #d33; }
+
+/* ─────────────────────────────────────────
+   ANIMATIONS
+   ───────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
