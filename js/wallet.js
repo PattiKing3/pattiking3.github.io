@@ -1,6 +1,6 @@
 /**
  * wallet.js  —  Patti King
- * Wallet / Coins page — open/close, tabs, Cash, bonus, withdraw, offers
+ * Wallet / Coins page — open/close, tabs, Fand, bonus, withdraw, offers
  * Depends on: common.js  (toast, setEl)
  */
 /* ══════════════════════════════════════════
@@ -104,17 +104,17 @@ function switchWalletTab(tab) {
 }
 
 /* ══════════════════════════════════════════
-   ADD CASH — PACKS
+   ADD FAND — PACKS
    ══════════════════════════════════════════ */
 function buyCoins(amount, price) {
     createTransaction(amount, 'credit', 'deposit', 'success', `Purchased ₹${price} pack`);
 }
 
 /* ══════════════════════════════════════════
-   ADD CASH — MANUAL INPUT
+   ADD FAND — MANUAL INPUT
    ══════════════════════════════════════════ */
-function validateManualCash(input) {
-  const hint = document.getElementById('manualCashHint');
+function validateManualFand(input) {
+  const hint = document.getElementById('manualFandHint');
   const val  = parseFloat(input.value);
   if (input.value && val < 25) {
     hint?.classList.add('error');
@@ -125,11 +125,11 @@ function validateManualCash(input) {
   }
 }
 
-function doManualAddCash() {
-  const inp = document.getElementById('manualCashInput');
+function doManualAddFand() {
+  const inp = document.getElementById('manualFandInput');
   const val = parseFloat(inp?.value);
   if (!val || val < 25) { toast('Please enter minimum ₹25 amount!', 'error'); return; }
-  createTransaction(val, 'credit', 'deposit', 'success', 'Manual Cash Added');
+  createTransaction(val, 'credit', 'deposit', 'success', 'Manual Fand Added');
   toast('Adding ₹' + val.toLocaleString('en-IN') + ' to your wallet...', 'success');
   if (inp) inp.value = '';
 }
@@ -237,5 +237,5 @@ window.doWithdraw = doWithdraw;
 window.openCoins = openCoins;
 window.closeCoins = closeCoins;
 window.switchWalletTab = switchWalletTab;
-window.doManualAddCash = doManualAddCash;
+window.doManualAddFand = doManualAddFand;
 window.claimBonus = claimBonus;
