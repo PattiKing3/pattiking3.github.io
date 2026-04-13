@@ -338,7 +338,7 @@
                    oninput="validateManualcash(this)"/>
           </div>
           <div class="manual-cash-hint" id="manualcaahHint">Minimum amount: &#8377;25</div>
-          <button class="add-cash-btn" onclick="doManualAddFund()">&#43; ADD CASH</button>
+          <button class="add-cash-btn" onclick="doManualAddCash()">&#43; ADD CASH</button>
         </div>
       </div>
 
@@ -591,7 +591,7 @@ function buyCoins(coins, price) {
 }
 
 function validateManualCash(inp) {
-  const hint = document.getElementById('manualFundHint');
+  const hint = document.getElementById('manualCashHint');
   const val  = parseInt(inp.value);
   if (val && val < 25) {
     hint.textContent = '⚠ Minimum amount is ₹25';
