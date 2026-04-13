@@ -351,7 +351,7 @@
             <div class="offer-card-left">
               <div class="offer-badge">&#127381; WELCOME</div>
               <div class="offer-title">First Deposit Bonus</div>
-              <div class="offer-desc">Get 50% extra on your first fund addition. Up to &#8377;500 bonus credited instantly!</div>
+              <div class="offer-desc">Get 50% extra on your first cash addition. Up to &#8377;500 bonus credited instantly!</div>
               <div class="offer-code-row">
                 <span class="offer-code-label">Code:</span>
                 <span class="offer-code">WELCOME50</span>
@@ -377,7 +377,7 @@
             <div class="offer-card-left">
               <div class="offer-badge" style="background:#d33;">&#128081; VIP</div>
               <div class="offer-title">VIP Member Offer</div>
-              <div class="offer-desc">Gold Members get 20% cashback on any fund addition above &#8377;500. Auto-credited!</div>
+              <div class="offer-desc">Gold Members get 20% cashback on any cash addition above &#8377;500. Auto-credited!</div>
               <div class="offer-code-row">
                 <span class="offer-code-label">Code:</span>
                 <span class="offer-code">VIP20</span>
@@ -390,7 +390,7 @@
             <div class="offer-card-left">
               <div class="offer-badge" style="background:#c87a10;">&#128176; REFER</div>
               <div class="offer-title">Refer &amp; Earn</div>
-              <div class="offer-desc">Invite a friend and earn &#8377;100 bonus when they add funds. No limit on referrals!</div>
+              <div class="offer-desc">Invite a friend and earn &#8377;100 bonus when they add cash. No limit on referrals!</div>
               <div class="offer-code-row">
                 <span class="offer-code-label">Code:</span>
                 <span class="offer-code">REFER100</span>
@@ -425,7 +425,7 @@
           <div class="txn-item">
             <div class="txn-icon add">&#43;</div>
             <div class="txn-info">
-              <div class="txn-name">Fund Added</div>
+              <div class="txn-name">Cash Added</div>
               <div class="txn-date">Yesterday, 6:15 PM</div>
             </div>
             <div class="txn-amt green">+&#8377;1,200</div>
@@ -590,7 +590,7 @@ function buyCoins(coins, price) {
   }, 1500);
 }
 
-function validateManualFund(inp) {
+function validateManualCash(inp) {
   const hint = document.getElementById('manualFundHint');
   const val  = parseInt(inp.value);
   if (val && val < 25) {
@@ -603,7 +603,7 @@ function validateManualFund(inp) {
 }
 
 function doManualAddCash() {
-  const val = parseInt(document.getElementById('manualcashInput').value);
+  const val = parseInt(document.getElementById('manualCashInput').value);
   if (!val || val < 25) { toast('Minimum amount is ₹25', 'error'); return; }
   toast('Processing ₹' + val + ' payment...', '');
   setTimeout(() => {
@@ -611,7 +611,7 @@ function doManualAddCash() {
     let cur = parseInt(document.getElementById('coinsBalDisplay').textContent.replace(/,/g,'')) || 0;
     cur += val;
     document.getElementById('coinsBalDisplay').textContent = cur.toLocaleString('en-IN');
-    document.getElementById('manualFundInput').value = '';
+    document.getElementById('manualCashInput').value = '';
   }, 1500);
 }
 
