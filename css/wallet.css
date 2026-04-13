@@ -85,8 +85,10 @@
    ───────────────────────────────────────── */
 .coins-balance-card {
   background: #ffffff;
-  border-radius: 0;
+  border-radius: 16;
   padding: 16px 18px 20px;
+  margin-left: 14px;
+  margin-right: 14px;
   margin-bottom: 8px;
   position: relative;
 }
@@ -129,6 +131,9 @@
    ───────────────────────────────────────── */
 .balance-breakdown {
   background: #ffffff;
+  margin-left: 14px;
+  margin-right: 14px;
+  border-radius: 16px;
   margin-bottom: 8px;
 }
 .balance-row {
@@ -204,6 +209,9 @@
   background: #ffffff;
   display: flex; align-items: center; justify-content: space-between;
   padding: 15px 18px;
+  margin-left: 14px;
+  margin-right: 14px;
+  border-radius: 16px;
   margin-bottom: 8px;
   cursor: pointer;
   transition: background 0.15s;
@@ -231,6 +239,9 @@
    ───────────────────────────────────────── */
 .wallet-menu-list {
   background: #ffffff;
+  margin-left: 14px;
+  margin-right: 14px;
+  border-radius: 16px;
   margin-bottom: 8px;
 }
 .wallet-menu-item {
@@ -426,12 +437,15 @@
 /* ─────────────────────────────────────────
    ADD FUND — Pack Grid (white card)
    ───────────────────────────────────────── */
-.add-fund-card {
+.add-cash-card {
   background: #fff;
   padding: 16px 18px;
+  margin-left: 14px;
+  margin-right: 14px;
+  border-radius: 16px;
   margin-bottom: 8px;
 }
-.add-fund-card-title {
+.add-cash-card-title {
   font-size: 14px; font-weight: 700; color: #111;
   margin-bottom: 14px;
 }
@@ -482,41 +496,41 @@
 /* ─────────────────────────────────────────
    MANUAL FUND INPUT
    ───────────────────────────────────────── */
-.manual-fund-wrap {
+.manual-cash-wrap {
   background: #f8f8f8;
   border: 1px solid #e8e8e8;
   border-radius: 10px; padding: 14px 14px 12px;
 }
-.manual-fund-label {
+.manual-cash-label {
   font-size: 11px; font-weight: 700; letter-spacing: 0.4px;
   text-transform: uppercase; color: #888; margin-bottom: 10px;
 }
-.manual-fund-input-row {
+.manual-cash-input-row {
   display: flex; align-items: center;
   background: #fff;
   border: 1.5px solid #ddd;
   border-radius: 8px; overflow: hidden; margin-bottom: 6px;
   transition: border-color 0.2s;
 }
-.manual-fund-input-row:focus-within {
+.manual-cash-input-row:focus-within {
   border-color: #1a9e4a;
 }
-.manual-fund-rupee {
+.manual-cash-rupee {
   padding: 0 8px 0 12px; font-size: 17px; font-weight: 700;
   color: #444; flex-shrink: 0;
 }
-.manual-fund-input {
+.manual-cash-input {
   flex: 1; background: transparent; border: none; outline: none;
   font-family: 'Source Sans 3', Arial, sans-serif;
   font-size: 15px; font-weight: 700; color: #111;
   padding: 12px 12px 12px 0;
 }
-.manual-fund-input::placeholder { color: #bbb; }
-.manual-fund-input::-webkit-inner-spin-button,
-.manual-fund-input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
-.manual-fund-hint { font-size: 10px; color: #999; margin-bottom: 12px; padding-left: 2px; }
-.manual-fund-hint.error { color: #e05555; }
-.add-fund-btn {
+.manual-cash-input::placeholder { color: #bbb; }
+.manual-cash-input::-webkit-inner-spin-button,
+.manual-cash-input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+.manual-cash-hint { font-size: 10px; color: #999; margin-bottom: 12px; padding-left: 2px; }
+.manual-cash-hint.error { color: #e05555; }
+.add-cash-btn {
   width: 100%; padding: 13px;
   background: #111;
   border: none; border-radius: 8px; color: #fff;
@@ -525,8 +539,8 @@
   cursor: pointer;
   transition: transform 0.18s, opacity 0.2s;
 }
-.add-fund-btn:hover  { opacity: 0.85; }
-.add-fund-btn:active { transform: scale(0.98); }
+.add-cash-btn:hover  { opacity: 0.85; }
+.add-cash-btn:active { transform: scale(0.98); }
 
 /* ─────────────────────────────────────────
    OFFERS LIST (white card)
@@ -534,6 +548,9 @@
 .offers-card {
   background: #fff;
   padding: 16px 18px;
+  margin-left: 14px;
+  margin-right: 14px;
+  border-radius: 16px;
   margin-bottom: 8px;
 }
 .offers-card-title {
@@ -591,6 +608,9 @@
 .txn-card {
   background: #fff;
   padding: 0 18px;
+  margin-left: 14px;
+  margin-right: 14px;
+  border-radius: 16px;
   margin-bottom: 8px;
 }
 .txn-card-title {
